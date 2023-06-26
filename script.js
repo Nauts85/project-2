@@ -1,36 +1,40 @@
 // questions to use in the quiz.
 const questions = [
   {
-  question:"What Color is the famous 1980s arcade character that likes to eat a varied diet of Pellets, Fruit and Ghosts?", 
-  options: [
-    {option: "Green", isCorrect: false},
-    {option: "Blue", isCorrect: false},
-    {option: "Yellow", isCorrect: true},
-    {option: "Pink", isCorrect: true}
-  ]
-  
-},
-{
-  question:"What was the name of the popular Atarii game that involves shooting invading aliens from the sky while hiding behind 3 barriers?",
-  options: [
-    {option: "Space Invaders", isCorrect: true},
-    {option: "OMG Alien invasion.", isCorrect: false},
-    {option: "Angry Aliens from Mars.", isCorrect: false},
-    {option:"Galaxy Gankers", isCorrect: false}
-  ]
-  
-}]
+    question:
+      "What Color is the famous 1980s arcade character that likes to eat a varied diet of Pellets, Fruit and Ghosts?",
+    option1: "Green",
+    option2: "Blue",
+    option3: "Yellow",
+    option4: "Pink"
+  },
+  {
+    question:
+      "What was the name of the popular Atarii game that involves shooting invading aliens from the sky while hiding behind 3 barriers?",
+    option1: "Space Invaders",
+    option2: "OMG Alien invasion.",
+    option3: "Angry Aliens from Mars.",
+    option4: "Galaxy Gankers"
+  }
+];
 
-// document elements.
-const confirmButtonElement = document.getElementById('#submit-answer'); //confirm answer button.
-const answerOptionElement = document.getElementsByClassName('option'); // option buttons.
-const questionElement = document.getElementById('question'); //<h1> question display element.
+//confirm answer button.
+const confirmButtonElement = document.getElementById('#submit-answer'); 
+
+//Option buttons.
+const optionButtonOne = document.getElementById("option1");
+const optionButtonTwo = document.getElementById("option2");
+const optionButtonThree = document.getElementById("option3");
+const optionButtonFour = document.getElementById("option4");
+//<h1> question display element.
+const questionElement = document.getElementById('question'); 
 
 // question variables.
 let currentQuestionIndex;
 let jumbledQuestions;
 
-$('#submit-answer').on('click', startGame) //TEMPORARY start button for testing purposes.
+ //TEMPORARY start button for testing purposes.
+$('#submit-answer').on('click', startGame)
 
 function startGame(){
   currentQuestionIndex = 0
@@ -38,13 +42,19 @@ function startGame(){
   getNextQuestion()
 }
 
+ // defines question as questions[0].question
 function getNextQuestion(){
-  displayQuestion(jumbledQuestions[currentQuestionIndex]) // defines question as questions[0].question
+  displayQuestion(jumbledQuestions[currentQuestionIndex])
 }
 
-function displayQuestion(question){
-  questionElement.innerText = question.question 
+function displayQuestion(question) {
+  questionElement.innerText = question.question;
+  optionButtonOne.innerText = question.option1;
+  optionButtonTwo.innerText = question.option2;
+  optionButtonThree.innerText = question.option3;
+  optionButtonFour.innerText = question.option4;
 }
+
 
 /**
  * Event handler for the start button on index.html
@@ -67,8 +77,6 @@ $("#btn-start").on("click", function gameIntro() {
   }, 22000);
 });
 
-//function displayNextQuestion()
-//displayOptions();
 //function checkAnswer()
 //function incrementScore()
 //function eraTransistion()
