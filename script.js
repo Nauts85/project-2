@@ -1,4 +1,5 @@
 // questions to use in the quiz.
+// questions to use in the quiz.
 const questions = [
   {
     question:
@@ -6,7 +7,8 @@ const questions = [
     option1: 'Green',
     option2: 'Blue',
     option3: 'Yellow',
-    option4: 'Pink'
+    option4: 'Pink',
+    answer: 'Yellow'
   },
   {
     question:
@@ -14,43 +16,45 @@ const questions = [
     option1: 'Space Invaders',
     option2: 'OMG Alien invasion.',
     option3: 'Angry Aliens from Mars.',
-    option4: 'Galaxy Gankers'
+    option4: 'Galaxy Gankers',
+    answer: 'Space Invaders'
   }
 ];
 
-//confirm answer button.
-const confirmButtonElement = document.getElementById('#submit-answer'); 
-
-//Option buttons.
-const optionButtonOne = document.getElementById('option1');
-const optionButtonTwo = document.getElementById('option2');
-const optionButtonThree = document.getElementById('option3');
-const optionButtonFour = document.getElementById('option4');
-//<h1> question display element.
-const questionElement = document.getElementById('question'); 
+// document elements.
+const confirmAnswerElement = document.getElementById('check-answer');
+const confirmButtonElement = document.getElementById('submit-answer'); //confirm answer button.
+const questionElement = document.getElementById('question'); //<h1> question display element.
+const optionButtonOne = document.getElementById('opt1');
+const optionButtonTwo = document.getElementById('opt2');
+const optionButtonThree = document.getElementById('opt3');
+const optionButtonFour = document.getElementById('opt4');
+let playerScoreElement = document.getElementById('score-counter');
 
 // question variables.
 let currentQuestionIndex;
-let quizQuestions;
+let quizQuestions = questions;
 
 //player score variable
-let playerScore = 0;
+let playerScore;
 
+//TEMPORARY start button for testing purposes.
+$('#submit-answer').on('click', startGame);
 
- //TEMPORARY start button for testing purposes.
-$('#submit-answer').on('click', startGame)
-
-function startGame(){
-  currentQuestionIndex = 0
-  quizQuestions = questions
-  getNextQuestion()
+//code to be run when the start button is clicked.
+function startGame() {
+  resetScore();
+  currentQuestionIndex = 0;
+  quizQuestions = questions;
+  getNextQuestion();
 }
 
- // defines question as questions[0].question
-function getNextQuestion(){
-  displayQuestion(quizQuestions[currentQuestionIndex])
+// defines question as questions[0].question
+function getNextQuestion() {
+  displayQuestion(quizQuestions[currentQuestionIndex]);
 }
 
+//function to display the quiz question and the answer options
 function displayQuestion(question) {
   questionElement.innerText = question.question;
   optionButtonOne.innerText = question.option1;
@@ -59,24 +63,30 @@ function displayQuestion(question) {
   optionButtonFour.innerText = question.option4;
 }
 
-//check answer function.
-$("#opt1,#opt2,#opt3,#opt4").on("click", function getAnswer(answer) {
+//Reset Score Function
+function resetScore(){ 
+  playerScore = 0; 
+  $('#score-counter').text(playerScore); 
+};
+
+
+/**
+ * On click event handler that gets the value of the button clicked.
+ * Then gets the value of the answer key from the current question.
+ * Logic is then used to compare both values.
+ * Player score is incremented if correct and gets the next question if incorrect.
+ */
+$('#opt1,#opt2,#opt3,#opt4').on('click', function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
-    console.log("Correct");
+    playerScore++;
+    playerScoreElement.innerText = playerScore;
   } else {
-    console.log("Nope!");
-    console.log(answer)
-    console.log(selectedAnswer)
+    currentQuestionIndex++;
+    getNextQuestion();
   }
 });
-
-//this is needed somewhere just not yet.
-//playerScore++;
-//playerScoreElement.innerText = playerScore
-
-
 
 /**
  * Event handler for the start button on index.html
@@ -86,17 +96,17 @@ $("#opt1,#opt2,#opt3,#opt4").on("click", function getAnswer(answer) {
 $('#btn-start').on('click', function gameIntro() {
   $('#btn-start').fadeOut(1000);
   setTimeout(() => {
-    $('.first-intro').fadeIn(2000).fadeOut(3000);
-  }, 5000);
+    $('.first-intro').fadeIn(2000).fadeOut(2000);
+  }, 2000);
   setTimeout(() => {
-    $('.second-intro').fadeIn(2000).fadeOut(3000);
-  }, 10000);
+    $('.second-intro').fadeIn(2000).fadeOut(2000);
+  }, 7000);
   setTimeout(() => {
     $('.third-intro').fadeIn(1000);
-  }, 15000);
+  }, 12000);
   setTimeout(() => {
     window.location.replace('game.html')
-  }, 22000);
+  }, 16000);
 });
 
 //function checkAnswer()
