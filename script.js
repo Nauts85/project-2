@@ -1,5 +1,4 @@
 // questions to use in the quiz.
-// questions to use in the quiz.
 const questions = [
   {
     question:
@@ -23,12 +22,11 @@ const questions = [
 
 // document elements.
 const confirmAnswerElement = document.getElementById('check-answer');
-const confirmButtonElement = document.getElementById('submit-answer'); //confirm answer button.
-const questionElement = document.getElementById('question'); //<h1> question display element.
-const optionButtonOne = document.getElementById('opt1');
-const optionButtonTwo = document.getElementById('opt2');
-const optionButtonThree = document.getElementById('opt3');
-const optionButtonFour = document.getElementById('opt4');
+const questionElement = document.getElementById('question-area'); //<p> question display element.
+const optionButtonOne = document.getElementById('opt-1');
+const optionButtonTwo = document.getElementById('opt-2');
+const optionButtonThree = document.getElementById('opt-3');
+const optionButtonFour = document.getElementById('opt-4');
 let playerScoreElement = document.getElementById('score-counter');
 
 // question variables.
@@ -39,7 +37,7 @@ let quizQuestions = questions;
 let playerScore;
 
 //TEMPORARY start button for testing purposes.
-$('#submit-answer').on('click', startGame);
+$('#check-answer').on('click', startGame);
 
 //code to be run when the start button is clicked.
 function startGame() {
@@ -54,7 +52,7 @@ function getNextQuestion() {
   displayQuestion(quizQuestions[currentQuestionIndex]);
 }
 
-//function to display the quiz question and the answer options
+//function to display the quiz question and the answer options.
 function displayQuestion(question) {
   questionElement.innerText = question.question;
   optionButtonOne.innerText = question.option1;
@@ -63,12 +61,11 @@ function displayQuestion(question) {
   optionButtonFour.innerText = question.option4;
 }
 
-//Reset Score Function
-function resetScore(){ 
-  playerScore = 0; 
-  $('#score-counter').text(playerScore); 
+//Reset Score Function.
+function resetScore() {
+  playerScore = 0;
+  $('#score-counter').text(playerScore);
 };
-
 
 /**
  * On click event handler that gets the value of the button clicked.
@@ -76,7 +73,7 @@ function resetScore(){
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
  */
-$('#opt1,#opt2,#opt3,#opt4').on('click', function getAnswer(answer) {
+$('#opt-1,#opt-2,#opt-3,#opt-4').on('click', function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
@@ -109,6 +106,32 @@ $('#btn-start').on('click', function gameIntro() {
   }, 16000);
 });
 
-//function checkAnswer()
-//function incrementScore()
+//function to trigger divs to split.
+$(window).on("load", function () {
+  window.setTimeout(divSplitLeft, 3000);
+  window.setTimeout(divSplitRight, 3000);
+});
+
+//function to animate divs after intro.
+function divSplitRight() {
+  $("#div2").animate(
+    {
+      left: "+=50vw"
+    },
+    5000
+  );
+}
+
+//function to animate divs after intro.
+function divSplitLeft() {
+  $("#div1").animate(
+    {
+      left: "-=50vw"
+    },
+    5000
+  );
+}
+
+
+
 //function eraTransistion()
