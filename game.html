@@ -13,31 +13,48 @@
 </head>
 
 <body>
-    <div class="container-lg container-style">
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div class="container">
         <div class="row">
+            <div class="col-3 player-score">
+                <span>SCORE:</span>
+                <span id="score-counter">0</span>
+            </div>
+            <div class="col-6 answer-description">
+                <p>Dropdown Text For explanation of answer</p>
+                <button id="btn-next-question">NEXT</button>
+            </div>
+        </div>
+    </div>
+    <div class="container quiz-container">
+        <div class="row">
+            <div class="col-1 pe-0">
+                <span id="question-counter">01:</span>
+            </div>
             <div class="col">
-                <h1 id="question">Question Area</h1>
+                <p id="question-area">THIS IS WHERE THE QUESTION WILL BE DISPLAYED, I'M WRITING LOADS OF WORDS SO THAT
+                    THE TEXT IS AS LONG AS A QUESTION, JUST A TINY BIT MORE?
+                </p>
             </div>
         </div>
         <div class="row text-center">
             <div class="col-6">
-                <button id="option1" class="btn-option">ANSWER1</button>
+                <button id="opt-1" class="btn-option">OPTION 1 </button>
             </div>
             <div class="col-6">
-                <button id="option2" class="btn-option">ANSWER2</button>
+                <button id="opt-2" class="btn-option">OPTION 2 </button>
             </div>
             <div class="col-6">
-                <button id="option3" class="btn-option">ANSWER3</button>
+                <button id="opt-3" class="btn-option">OPTION 3 </button>
             </div>
             <div class="col-6">
-                <button id="option4" class="btn-option">ANSWER4</button>
+                <button id="opt-4" class="btn-option">OPTION 4 </button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <button type="button" id="submit-answer">CONFIRM</button>
-            </div>
-        </div>
+    </div>
+    <div>
+        <button id="exit-button">EXIT</button>
     </div>
     <script type="text/javascript" src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
