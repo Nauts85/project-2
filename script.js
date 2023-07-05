@@ -22,26 +22,27 @@ const questions = [
 
 // document elements.
 const confirmAnswerElement = document.getElementById('check-answer');
-const questionElement = document.getElementById('question-area'); //<p> question display element.
+const questionElement = document.getElementById('question-area');
 const optionButtonOne = document.getElementById('opt-1');
 const optionButtonTwo = document.getElementById('opt-2');
 const optionButtonThree = document.getElementById('opt-3');
 const optionButtonFour = document.getElementById('opt-4');
+const displayAnswerElement = document.getElementById("display");
 let playerScoreElement = document.getElementById('score-counter');
+let questionCounterElement = document.getElementById("question-counter");
 
 // question variables.
 let currentQuestionIndex;
 let quizQuestions = questions;
+let questionCounter;
 
 //player score variable
 let playerScore;
 
-//TEMPORARY start button for testing purposes.
-$('#check-answer').on('click', startGame);
-
 //code to be run when the start button is clicked.
 function startGame() {
   resetScore();
+  resetQuestionCounter();
   currentQuestionIndex = 0;
   quizQuestions = questions;
   getNextQuestion();
@@ -67,22 +68,34 @@ function resetScore() {
   $('#score-counter').text(playerScore);
 };
 
+function resetQuestionCounter() {
+  questionCounter = 1;
+  $("#question-counter").text(questionCounter);
+}
+
 /**
  * On click event handler that gets the value of the button clicked.
  * Then gets the value of the answer key from the current question.
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
  */
-$('#opt-1,#opt-2,#opt-3,#opt-4').on('click', function getAnswer(answer) {
+$("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
+    $("#display").removeClass("hidden").text("CORRECT");
     playerScore++;
     playerScoreElement.innerText = playerScore;
   } else {
-    currentQuestionIndex++;
-    getNextQuestion();
+    $("#display").removeClass("hidden").text("Incorrect");
   }
+  questionCounter++;
+  currentQuestionIndex++;
+  setTimeout(() => {
+    $("#display").addClass("hidden");
+    getNextQuestion();
+    questionCounterElement.innerText = questionCounter;
+  }, 4000);
 });
 
 /**
@@ -106,10 +119,11 @@ $('#btn-start').on('click', function gameIntro() {
   }, 16000);
 });
 
-//function to trigger divs to split.
+//function to trigger divs to split and launch the game.
 $(window).on("load", function () {
   window.setTimeout(divSplitLeft, 3000);
   window.setTimeout(divSplitRight, 3000);
+  startGame();
 });
 
 //function to animate divs after intro.
