@@ -84,15 +84,18 @@ $("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
     $("#display").removeClass("hidden").text("CORRECT");
+    this.classList.add('correct');
     playerScore++;
     playerScoreElement.innerText = playerScore;
   } else {
     $("#display").removeClass("hidden").text("Incorrect");
+    this.classList.add('incorrect');
   }
   questionCounter++;
   currentQuestionIndex++;
   setTimeout(() => {
     $("#display").addClass("hidden");
+    this.classList.remove('correct', 'incorrect');
     getNextQuestion();
     questionCounterElement.innerText = questionCounter;
   }, 4000);
