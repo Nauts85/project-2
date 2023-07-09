@@ -25,7 +25,7 @@ const questions = [
     answer: 'NES Family Computer'
   },
   {
-    question: 'Christian activist Mary Whitehouse once said "Its the most outrageous affront to public decency since the Mona Lisas provacative smile." What popular game of the 1980s was she reffering to?',
+    question: "Christian activist Mary Whitehouse once said 'Its the most outrageous affront to public decency since the Mona Lisas provacative smile.' What popular game of the 1980s was she reffering to?",
     option1: 'Dizzy',
     option2: 'Double Dragon',
     option3: 'Space Invaders',
@@ -41,7 +41,7 @@ const questions = [
     answer: 'Sim City'
   },
   {
-    question: 'What beat em up of the 1990s caused controversy with its "realistic" graphics and the ability to "FINISH" your opponents?',
+    question: "What beat em up of the 1990s caused controversy with its 'realistic' graphics and the ability to 'FINISH' your opponents?",
     option1: 'Fifa 95',
     option2: 'Tekken',
     option3: 'Lemmings',
@@ -222,22 +222,22 @@ function resetQuestionCounter() {
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
  */
-$("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
+$('#opt-1,#opt-2,#opt-3,#opt-4').on('click', function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
-    $("#display").removeClass("hidden").text("CORRECT").fadeOut(4500);
-    this.classList.add("correct");
+    $('#display').removeClass('hidden').text('CORRECT').fadeOut(4500);
+    this.classList.add('correct');
     playerScore++;
     playerScoreElement.innerText = playerScore;
   } else {
-    $("#display").removeClass("hidden").text("Incorrect").fadeOut(4500);
-    this.classList.add("incorrect");
+    $('#display').removeClass('hidden').text('Incorrect').fadeOut(4500);
+    this.classList.add('incorrect');
   }
   currentQuestionIndex++;
   setTimeout(() => {
-    $("#display").addClass("hidden");
-    this.classList.remove("correct", "incorrect");
+    $('#display').addClass('hidden');
+    this.classList.remove('correct', 'incorrect');
     questionCounter++;
     midGameSequence();
     getNextQuestion();
@@ -250,22 +250,22 @@ $("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
  * each element is faded in, totalling 10 seconds per transition
  * ending with the introduction to the first game section
  */
-$("#btn-start").on("click", function gameIntro() {
-  $("#btn-start").fadeOut(1000);
+$('#btn-start').on('click', function gameIntro() {
+  $('#btn-start').fadeOut(1000);
   setTimeout(() => {
-    $(".first-intro").fadeIn(2000).fadeOut(2000);
+    $('.first-intro').fadeIn(2000).fadeOut(2000);
   }, 2000);
   setTimeout(() => {
-    $(".second-intro").fadeIn(2000).fadeOut(2000);
+    $('.second-intro').fadeIn(2000).fadeOut(2000);
   }, 7000);
   setTimeout(() => {
-    window.location.replace("game.html");
+    window.location.replace('game.html');
   }, 12000);
 });
 
 
 //function to trigger divs to split and launch the game.
-$(window).on("load", function () {
+$(window).on('load', function () {
   window.setTimeout(divSplitLeft, 3000);
   window.setTimeout(divSplitRight, 3000);
   startGame();
@@ -273,37 +273,42 @@ $(window).on("load", function () {
 
 //function to animate divs after intro.
 function divSplitRight() {
-  $("#div2").animate({ left: "+=50vw" }, 3500);
-  $("#div2").hide(1000);
+  $('#div2').animate({ left: '+=50vw' }, 3500);
+  $('#div2').hide(1000);
 }
 
 //function to animate divs after intro.
 function divSplitLeft() {
-  $("#div1").animate({ left: "-=50vw" }, 3500);
-  $("#div1").hide(1000);
+  $('#div1').animate({ left: '-=50vw' }, 3500);
+  $('#div1').hide(1000);
 }
 
-
+//function to give a message to the user when 50% of the quiz is completed.
 function midGameSequence() {
-  if (questionCounter == 10 && playerScore < 5) {
-    $("#display")
-      .removeClass("hidden")
-      .text("HALF WAY!")
-      .fadeIn(1000)
-      .fadeOut(1000);
+  if (questionCounter == 2 && playerScore < 1) {
+    setTimeout(() => {
+      $("#display")
+        .removeClass("hidden")
+        .text("HALF WAY!")
+        .fadeIn(500)
+        .fadeOut(1000);
+    }, 750);
     setTimeout(() => {
       $("#display").text("DONT GIVE UP!").fadeIn(1000).fadeOut(1000);
-    }, 2000);
-  } else if (questionCounter == 10 && playerScore > 5 <= 10) {
-    $("#display")
-      .removeClass("hidden")
-      .text("HALF WAY!")
-      .fadeIn(1000)
-      .fadeOut(1000);
+    }, 2250);
+  } else if (questionCounter == 2 && playerScore == 1) {
+    setTimeout(() => {
+      $("#display")
+        .removeClass("hidden")
+        .text("HALF WAY!")
+        .fadeIn(500)
+        .fadeOut(1000);
+    }, 750);
     setTimeout(() => {
       $("#display").text("YOUR DOING GREAT!").fadeIn(1000).fadeOut(1000);
-    }, 2000);
+    }, 2250);
   }
+  $("#display").addClass("hidden");
 }
 
 
