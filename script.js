@@ -211,9 +211,17 @@ function resetScore() {
   $('#score-counter').text(playerScore);
 };
 
+//function to reset the question counter when game starts.
 function resetQuestionCounter() {
   questionCounter = 1;
-  $('#question-counter').text(questionCounter);
+  $("#question-counter").text(questionCounter);
+}
+
+//function to add one to player score.
+function addScoreAnimation() {
+  $(".add-one").text("+1").slideUp(2000).hide(1000);
+  playerScore++;
+  playerScoreElement.innerText = playerScore;
 }
 
 /**
@@ -222,24 +230,24 @@ function resetQuestionCounter() {
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
  */
-$('#opt-1,#opt-2,#opt-3,#opt-4').on('click', function getAnswer(answer) {
+$("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
-    $('#display').removeClass('hidden').text('CORRECT').fadeOut(4500);
-    this.classList.add('correct');
-    playerScore++;
-    playerScoreElement.innerText = playerScore;
+    $("#display").removeClass("hidden").text("CORRECT").fadeOut(4500);
+    this.classList.add("correct");
+    addScoreAnimation();
   } else {
-    $('#display').removeClass('hidden').text('Incorrect').fadeOut(4500);
-    this.classList.add('incorrect');
+    $("#display").removeClass("hidden").text("Incorrect").fadeOut(4500);
+    this.classList.add("incorrect");
   }
   currentQuestionIndex++;
   setTimeout(() => {
-    $('#display').addClass('hidden');
-    this.classList.remove('correct', 'incorrect');
+    $("#display").addClass("hidden");
+    this.classList.remove("correct", "incorrect");
     questionCounter++;
     midGameSequence();
+    endGameSequence();
     getNextQuestion();
     questionCounterElement.innerText = questionCounter;
   }, 5000);
@@ -265,25 +273,34 @@ $('#btn-start').on('click', function gameIntro() {
 
 
 //function to trigger divs to split and launch the game.
-$(window).on('load', function () {
-  window.setTimeout(divSplitLeft, 3000);
-  window.setTimeout(divSplitRight, 3000);
+$(window).on("load", function () {
+  window.setTimeout(divSplitLeft, 2750);
+  window.setTimeout(divSplitRight, 2750);
   startGame();
 });
 
+$('#btn-rules').on('click', function showRules() {
+  $('.rules-container').fadeIn(1000);
+})
+
+$('#close-rules-btn').on('click', function closeRules() {
+  $('.rules-container').fadeOut(1000);
+})
+
+
+
 //function to animate divs after intro.
 function divSplitRight() {
-  $('#div2').animate({ left: '+=50vw' }, 3500);
-  $('#div2').hide(1000);
+  $("#div2").animate({ left: "+=50vw" }, 3500);
+  $("#div2").hide(1000);
 }
 
 //function to animate divs after intro.
 function divSplitLeft() {
-  $('#div1').animate({ left: '-=50vw' }, 3500);
-  $('#div1').hide(1000);
+  $("#div1").animate({ left: "-=50vw" }, 3500);
+  $("#div1").hide(1000);
 }
 
-//function to give a message to the user when 50% of the quiz is completed.
 function midGameSequence() {
   if (questionCounter == 2 && playerScore < 1) {
     setTimeout(() => {
