@@ -73,20 +73,20 @@ const questions = [
     answer: '3'
   },
   {
-    question: 'What late 1990s video game has had over 4,000 articles published about it, which include accusations of glamorising violence, corrupting gamers, and connection to real life crimes, holds the record for the most controversial game of all time?',
-    option1: 'Unreal',
-    option2: 'Grand Theft Auto',
-    option3: 'Metal Gear Solid',
-    option4: 'Resident Evil',
-    answer: 'Grand Theft Auto'
-  },
-  {
     question: 'Shifting a Massive 82 million Units to date, what was the biggest selling video game of the 2000s?',
     option1: 'Wii Sports',
     option2: 'Pokemon Diamond & Pearl',
     option3: 'New Super Mario Bros',
     option4: 'The Sims',
     answer: 'Wii Sports'
+  },
+  {
+    question: 'What late 1990s video game has had over 4,000 articles published about it, which include accusations of glamorising violence, corrupting gamers, and connection to real life crimes, holds the record for the most controversial game of all time?',
+    option1: 'Unreal',
+    option2: 'Grand Theft Auto',
+    option3: 'Metal Gear Solid',
+    option4: 'Resident Evil',
+    answer: 'Grand Theft Auto'
   },
   {
     question: 'The Burning Crusade, Wrath of the Lich King, Cataclysm and Mists of Pandaria were just some of the expansions released for which popular MMORPG launched in 2004?',
@@ -219,7 +219,7 @@ function resetQuestionCounter() {
 
 //function to add one to player score.
 function addScoreAnimation() {
-  $(".add-one").text("+1").slideUp(2000).hide(1000);
+  $(".add-one").text("+1").show(250).hide(2500);
   playerScore++;
   playerScoreElement.innerText = playerScore;
 }
@@ -234,11 +234,11 @@ $("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
-    $("#display").removeClass("hidden").text("CORRECT").fadeOut(4500);
+    $("#display").removeClass("hidden").text("CORRECT")
     this.classList.add("correct");
     addScoreAnimation();
   } else {
-    $("#display").removeClass("hidden").text("Incorrect").fadeOut(4500);
+    $("#display").removeClass("hidden").text("Incorrect")
     this.classList.add("incorrect");
   }
   currentQuestionIndex++;
@@ -255,11 +255,11 @@ $("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
 
 /**
  * Event handler for the start button on index.html
- * each element is faded in, totalling 10 seconds per transition
+ * each element is faded in, totalling 4 seconds per transition
  * ending with the introduction to the first game section
  */
 $('#btn-start').on('click', function gameIntro() {
-  $('#btn-start').fadeOut(1000);
+  $('#btn-start,#btn-rules').fadeOut(1000);
   setTimeout(() => {
     $('.first-intro').fadeIn(2000).fadeOut(2000);
   }, 2000);
@@ -274,58 +274,157 @@ $('#btn-start').on('click', function gameIntro() {
 
 //function to trigger divs to split and launch the game.
 $(window).on("load", function () {
-  window.setTimeout(divSplitLeft, 2750);
-  window.setTimeout(divSplitRight, 2750);
+  window.setTimeout(revealDivLeft, 2750);
+  window.setTimeout(revealDivRight, 2750);
   startGame();
 });
 
+//function to open the game rules
 $('#btn-rules').on('click', function showRules() {
   $('.rules-container').fadeIn(1000);
 })
 
+//function to close the game rules
 $('#close-rules-btn').on('click', function closeRules() {
   $('.rules-container').fadeOut(1000);
 })
 
-
-
 //function to animate divs after intro.
-function divSplitRight() {
-  $("#div2").animate({ left: "+=50vw" }, 3500);
-  $("#div2").hide(1000);
+function revealDivRight() {
+  $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3500);
+  $('#game-reveal-div-2').hide(500);
 }
 
 //function to animate divs after intro.
-function divSplitLeft() {
-  $("#div1").animate({ left: "-=50vw" }, 3500);
-  $("#div1").hide(1000);
+function revealDivLeft() {
+  $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3500);
+  $('#game-reveal-div-1').hide(500);
 }
 
+//function to encourage the user at certain points in the quiz.
 function midGameSequence() {
-  if (questionCounter == 2 && playerScore < 1) {
+  if (questionCounter == 10 && playerScore < 5) {
     setTimeout(() => {
-      $("#display")
+      $("#progress-display")
         .removeClass("hidden")
-        .text("HALF WAY!")
-        .fadeIn(500)
+        .html(`<p>HALF</p> <p>WAY!</p>`)
+        .fadeIn(1000)
         .fadeOut(1000);
     }, 750);
     setTimeout(() => {
-      $("#display").text("DONT GIVE UP!").fadeIn(1000).fadeOut(1000);
-    }, 2250);
-  } else if (questionCounter == 2 && playerScore == 1) {
+      $("#progress-display").html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`).fadeIn(1000).fadeOut(750);
+    }, 2000);
+  } else if (questionCounter == 10 && playerScore >= 10) {
     setTimeout(() => {
-      $("#display")
+      $("#progress-display")
         .removeClass("hidden")
-        .text("HALF WAY!")
-        .fadeIn(500)
+        .html(`<p>HALF</p> <p>WAY!</p>`)
+        .fadeIn(1000)
         .fadeOut(1000);
     }, 750);
     setTimeout(() => {
-      $("#display").text("YOUR DOING GREAT!").fadeIn(1000).fadeOut(1000);
-    }, 2250);
+      $("#progress-display").html(`<p>YOUR</p> <p>DOING</p> <p>GREAT!</>`).fadeIn(1000).fadeOut(750);
+    }, 2000);
   }
-  $("#display").addClass("hidden");
+  $("#progress-display").addClass("hidden");
+}
+
+/**
+ * Function for the end of the quiz
+ * all visible elements are faded out.
+ * the user score is totaled and logic is used to decide the output.
+ * template literals are used to simply change the layout of the container and its elements.
+ */
+function endGameSequence() {
+  if (questionCounter == 21 && playerScore <= 5) {
+    setTimeout(() => {
+      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+    }, 1000);
+    setTimeout(() => {
+      $("body")
+        .after(`
+        <div class="container container-game-end text-center">
+          <div class="row">
+            <div class="col-12">
+              <h1>Congratulations<h1>
+                <p>You've made it to the end of the quiz!</p>
+                <p>You managed to answer ${playerScore} questions correctly!</p>
+                <p>Earning you the Rank of <span class="noob-text">NOOB<b></b></p>
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn-restart">RESTART</button>
+              <button type="button" class="btn-main-menu">MAIN MENU</button>
+            </div>
+          </div>
+        </div>`)
+    }, 3000);
+  } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10 ) {
+    setTimeout(() => {
+      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+    }, 1000);
+    setTimeout(() => {
+      $("body")
+        .after(`
+        <div class="container container-game-end text-center">
+          <div class="row">
+            <div class="col-12">
+              <h1>Congratulations<h1>
+                <p>You've made it to the end of the quiz!</p>
+                <p>You managed to answer ${playerScore} questions correctly!</p>
+                <p>Earning you the Rank of <span class="average-text">utterly average<b></b></p>
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn-restart">RESTART</button>
+              <button type="button" class="btn-main-menu">MAIN MENU</button>
+            </div>
+          </div>
+        </div>`)
+    }, 3000);
+  } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15 ) {
+    setTimeout(() => {
+      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+    }, 1000);
+    setTimeout(() => {
+      $("body")
+        .after(`
+        <div class="container container-game-end text-center">
+          <div class="row">
+            <div class="col-12">
+              <h1>Congratulations<h1>
+                <p>You've made it to the end of the quiz!</p>
+                <p>You managed to answer ${playerScore} questions correctly!</p>
+                <p>Earning you the Rank of <span class="epic-text">extremely epic<b></b></p>
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn-restart">RESTART</button>
+              <button type="button" class="btn-main-menu">MAIN MENU</button>
+            </div>
+          </div>
+        </div>`)
+    }, 3000);
+  } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20 ) {
+    setTimeout(() => {
+      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+    }, 1000);
+    setTimeout(() => {
+      $("body")
+        .after(`
+        <div class="container container-game-end text-center">
+          <div class="row">
+            <div class="col-12">
+              <h1>Congratulations<h1>
+                <p>You've made it to the end of the quiz!</p>
+                <p>You managed to answer ${playerScore} questions correctly!</p>
+                <p>Earning you the Rank of <span class="legendary-text">legendary<b></b></p>
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn-restart">RESTART</button>
+              <button type="button" class="btn-main-menu">MAIN MENU</button>
+            </div>
+          </div>
+        </div>`)
+    }, 3000);
+  }
 }
 
 
