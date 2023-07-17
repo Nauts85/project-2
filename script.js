@@ -163,6 +163,16 @@ const questions = [
   },
 ];
 
+
+
+//game sound effects.
+let mainTheme = new Audio('/assests/audio/bg-music-game.wav');
+let correctAnswerSound = new Audio('/assests/audio/sound-correct-answer.wav');
+let incorrectAnswerSound = new Audio('/assests/audio/sound-incorrect-answer.wav');
+let gameStartBtnSound = new Audio('/assests/audio/sound-game-start-btn.wav');
+let mouseOverSound = new Audio('/assests/audio/sound-mouse-over.wav');
+let endQuizRevealSound = new Audio('/assests/audio/sound-quiz-end-reveal.wav');
+
 // document elements.
 const confirmAnswerElement = document.getElementById('check-answer');
 const questionElement = document.getElementById('question-area');
@@ -224,26 +234,35 @@ function addScoreAnimation() {
   playerScoreElement.innerText = playerScore;
 }
 
+//function to play sound on all buttons on mouse over.
+$('button').on('mouseover', function() {
+  mouseOverSound.play();
+});
+
 /**
  * On click event handler that gets the value of the button clicked.
  * Then gets the value of the answer key from the current question.
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
  */
-$("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
+$("button.btn-option").on("click", function getAnswer(answer) {
+  $('button.btn-option').prop('disabled', true);
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
     $("#display").removeClass("hidden").text("CORRECT")
     this.classList.add("correct");
+    correctAnswerSound.play();
     addScoreAnimation();
   } else {
     $("#display").removeClass("hidden").text("Incorrect")
     this.classList.add("incorrect");
+    incorrectAnswerSound.play();
   }
   currentQuestionIndex++;
   setTimeout(() => {
     $("#display").addClass("hidden");
+    $('button.btn-option').prop('disabled', false);
     this.classList.remove("correct", "incorrect");
     questionCounter++;
     midGameSequence();
@@ -259,6 +278,7 @@ $("#opt-1,#opt-2,#opt-3,#opt-4").on("click", function getAnswer(answer) {
  * ending with the introduction to the first game section
  */
 $('#btn-start').on('click', function gameIntro() {
+  gameStartBtnSound.play();
   $('#btn-start,#btn-rules').fadeOut(1000);
   setTimeout(() => {
     $('.first-intro').fadeIn(2000).fadeOut(2000);
@@ -271,13 +291,18 @@ $('#btn-start').on('click', function gameIntro() {
   }, 12000);
 });
 
-
 //function to trigger divs to split and launch the game.
 $(window).on("load", function () {
   window.setTimeout(revealDivLeft, 2750);
   window.setTimeout(revealDivRight, 2750);
   startGame();
 });
+
+$('#exit-button').on('click', function () {
+  if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
+    mainMenuReturn();
+  }
+})
 
 //function to open the game rules
 $('#btn-rules').on('click', function showRules() {
@@ -291,19 +316,29 @@ $('#close-rules-btn').on('click', function closeRules() {
 
 //function to animate divs after intro.
 function revealDivRight() {
-  $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3500);
+  $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3000);
   $('#game-reveal-div-2').hide(500);
 }
 
 //function to animate divs after intro.
 function revealDivLeft() {
-  $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3500);
+  $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3000);
   $('#game-reveal-div-1').hide(500);
+}
+
+//function to play the theme tune when the quiz loads.
+$('audio#theme').ready(function playTheme() {
+  $('audio#theme')[0].play();
+  $('audio#theme')[0].loop = true;
+})
+
+function mainMenuReturn() {
+  window.location.replace('index.html');
 }
 
 //function to encourage the user at certain points in the quiz.
 function midGameSequence() {
-  if (questionCounter == 10 && playerScore < 5) {
+  if (questionCounter == 10) {
     setTimeout(() => {
       $("#progress-display")
         .removeClass("hidden")
@@ -311,20 +346,30 @@ function midGameSequence() {
         .fadeIn(1000)
         .fadeOut(1000);
     }, 750);
-    setTimeout(() => {
-      $("#progress-display").html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`).fadeIn(1000).fadeOut(750);
-    }, 2000);
-  } else if (questionCounter == 10 && playerScore >= 10) {
+    if (playerScore >= 1 && playerScore <= 5) {
+      setTimeout(() => {
+        $("#progress-display")
+          .html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`)
+          .fadeIn(1000)
+          .fadeOut(750);
+      }, 2000);
+    } else if (playerScore >= 6 && playerScore <= 10) {
+      setTimeout(() => {
+        $("#progress-display")
+          .html(`<p>WOW!</p> <p>YOUR</p> <p>GOOD!</>`)
+          .fadeIn(1000)
+          .fadeOut(750);
+      }, 2000);
+    }
+  }
+  if (questionCounter == 20) {
     setTimeout(() => {
       $("#progress-display")
         .removeClass("hidden")
-        .html(`<p>HALF</p> <p>WAY!</p>`)
-        .fadeIn(1000)
+        .html(`<p>FINAL</p> <p>QUESTION!</p>`)
+        .fadeIn(1500)
         .fadeOut(1000);
     }, 750);
-    setTimeout(() => {
-      $("#progress-display").html(`<p>YOUR</p> <p>DOING</p> <p>GREAT!</>`).fadeIn(1000).fadeOut(750);
-    }, 2000);
   }
   $("#progress-display").addClass("hidden");
 }
@@ -338,9 +383,10 @@ function midGameSequence() {
 function endGameSequence() {
   if (questionCounter == 21 && playerScore <= 5) {
     setTimeout(() => {
-      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+      $("body *").fadeOut(2000);
     }, 1000);
     setTimeout(() => {
+      endQuizRevealSound.play()
       $("body")
         .after(`
         <div class="container container-game-end text-center">
@@ -352,17 +398,18 @@ function endGameSequence() {
                 <p>Earning you the Rank of <span class="noob-text">NOOB<b></b></p>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart">RESTART</button>
-              <button type="button" class="btn-main-menu">MAIN MENU</button>
+              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
+              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
-    }, 3000);
-  } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10 ) {
+    }, 2500);
+  } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
     }, 1000);
     setTimeout(() => {
+      endQuizRevealSound.play()
       $("body")
         .after(`
         <div class="container container-game-end text-center">
@@ -374,16 +421,17 @@ function endGameSequence() {
                 <p>Earning you the Rank of <span class="average-text">utterly average<b></b></p>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart">RESTART</button>
-              <button type="button" class="btn-main-menu">MAIN MENU</button>
+              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
+              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
-    }, 3000);
-  } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15 ) {
+    }, 2500);
+  } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
     }, 1000);
+    endQuizRevealSound.play()
     setTimeout(() => {
       $("body")
         .after(`
@@ -396,16 +444,17 @@ function endGameSequence() {
                 <p>Earning you the Rank of <span class="epic-text">extremely epic<b></b></p>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart">RESTART</button>
-              <button type="button" class="btn-main-menu">MAIN MENU</button>
+              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
+              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
-    }, 3000);
-  } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20 ) {
+    }, 2500);
+  } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
     }, 1000);
+    endQuizRevealSound.play()
     setTimeout(() => {
       $("body")
         .after(`
@@ -418,14 +467,16 @@ function endGameSequence() {
                 <p>Earning you the Rank of <span class="legendary-text">legendary<b></b></p>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart">RESTART</button>
-              <button type="button" class="btn-main-menu">MAIN MENU</button>
+              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
+              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
-    }, 3000);
+    }, 2500);
   }
 }
+
+
 
 
 
