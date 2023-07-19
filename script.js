@@ -178,13 +178,11 @@ let halfWaySound = new Audio('/assests/audio/sound-half-way.wav');
 let finalQuestionSound = new Audio('/assests/audio/sound-final-question.wav');
 
 // document elements.
-const confirmAnswerElement = document.getElementById('check-answer');
 const questionElement = document.getElementById('question-area');
 const optionButtonOne = document.getElementById('opt-1');
 const optionButtonTwo = document.getElementById('opt-2');
 const optionButtonThree = document.getElementById('opt-3');
 const optionButtonFour = document.getElementById('opt-4');
-const displayAnswerElement = document.getElementById('display');
 let playerScoreElement = document.getElementById('score-counter');
 let questionCounterElement = document.getElementById('question-counter');
 
