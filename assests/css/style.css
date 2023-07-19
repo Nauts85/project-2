@@ -1,7 +1,7 @@
 /*---------------------------------------------Images-------------*/
 
 #img-bg-main {
-  background-image: url(/assests/images/Main-Menu-bg-img.jpg);
+  background-image: url(../images/Main-Menu-bg-img.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -10,7 +10,7 @@
 }
 
 #img-bg-game {
-  background-image: url(/assests/images/game-bg-img.jpg);
+  background-image: url(../images/game-bg-img.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -344,7 +344,7 @@ button:hover {
   display: inline-block;
   position: absolute;
   z-index: 1;
-  background-image: url(/assests/images/Intro-bg-img.jpg);
+  background-image: url(../images/Intro-bg-img.jpg);
   background-size: cover;
 }
 
@@ -355,7 +355,7 @@ button:hover {
   left: 50vw;
   position: absolute;
   z-index: 1;
-  background-image: url(/assests/images/Intro-bg-img.jpg);
+  background-image: url(../images/Intro-bg-img.jpg);
   background-size: cover;
 }
 
