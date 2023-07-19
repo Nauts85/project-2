@@ -135,7 +135,7 @@ const questions = [
     option2: 'Bio Shock',
     option3: 'Outlast',
     option4: 'State Of Decay',
-    answer: 'Bio Shock'
+    answer: 'The Last of Us'
   },
   {
     question: 'Partially Released to the public in 2009 and later given a full release in 2011, What video game invloving building blocks is still popular to this day?',
@@ -172,6 +172,10 @@ let incorrectAnswerSound = new Audio('/assests/audio/sound-incorrect-answer.wav'
 let gameStartBtnSound = new Audio('/assests/audio/sound-game-start-btn.wav');
 let mouseOverSound = new Audio('/assests/audio/sound-mouse-over.wav');
 let endQuizRevealSound = new Audio('/assests/audio/sound-quiz-end-reveal.wav');
+let introSoundPresenting = new Audio('/assests/audio/sound-intro-presenting.wav');
+let introSoundTrivia = new Audio('/assests/audio/sound-intro-trivia.wav');
+let halfWaySound = new Audio('/assests/audio/sound-half-way.wav');
+let finalQuestionSound = new Audio('/assests/audio/sound-final-question.wav');
 
 // document elements.
 const confirmAnswerElement = document.getElementById('check-answer');
@@ -229,13 +233,13 @@ function resetQuestionCounter() {
 
 //function to add one to player score.
 function addScoreAnimation() {
-  $(".add-one").text("+1").show(250).hide(2500);
+  $(".add-one").text("+1").show(500).hide(2500);
   playerScore++;
   playerScoreElement.innerText = playerScore;
 }
 
 //function to play sound on all buttons on mouse over.
-$('button').on('mouseover', function() {
+$('button').on('mouseover', function () {
   mouseOverSound.play();
 });
 
@@ -269,7 +273,7 @@ $("button.btn-option").on("click", function getAnswer(answer) {
     endGameSequence();
     getNextQuestion();
     questionCounterElement.innerText = questionCounter;
-  }, 5000);
+  }, 4250);
 });
 
 /**
@@ -281,9 +285,11 @@ $('#btn-start').on('click', function gameIntro() {
   gameStartBtnSound.play();
   $('#btn-start,#btn-rules').fadeOut(1000);
   setTimeout(() => {
+    introSoundPresenting.play();
     $('.first-intro').fadeIn(2000).fadeOut(2000);
   }, 2000);
   setTimeout(() => {
+    introSoundTrivia.play();
     $('.second-intro').fadeIn(2000).fadeOut(2000);
   }, 7000);
   setTimeout(() => {
@@ -340,35 +346,39 @@ function mainMenuReturn() {
 function midGameSequence() {
   if (questionCounter == 10) {
     setTimeout(() => {
+      halfWaySound.play()
       $("#progress-display")
         .removeClass("hidden")
         .html(`<p>HALF</p> <p>WAY!</p>`)
-        .fadeIn(1000)
+        .fadeIn(1750)
         .fadeOut(1000);
     }, 750);
     if (playerScore >= 1 && playerScore <= 5) {
       setTimeout(() => {
+        halfWaySound.play()
         $("#progress-display")
           .html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`)
-          .fadeIn(1000)
-          .fadeOut(750);
+          .fadeIn(1750)
+          .fadeOut(1250);
       }, 2000);
     } else if (playerScore >= 6 && playerScore <= 10) {
       setTimeout(() => {
+        halfWaySound.play()
         $("#progress-display")
           .html(`<p>WOW!</p> <p>YOUR</p> <p>GOOD!</>`)
-          .fadeIn(1000)
-          .fadeOut(750);
+          .fadeIn(1750)
+          .fadeOut(1250);
       }, 2000);
     }
   }
   if (questionCounter == 20) {
     setTimeout(() => {
+      finalQuestionSound.play()
       $("#progress-display")
         .removeClass("hidden")
         .html(`<p>FINAL</p> <p>QUESTION!</p>`)
-        .fadeIn(1500)
-        .fadeOut(1000);
+        .fadeIn(2000)
+        .fadeOut(1250);
     }, 750);
   }
   $("#progress-display").addClass("hidden");
@@ -386,52 +396,57 @@ function endGameSequence() {
       $("body *").fadeOut(2000);
     }, 1000);
     setTimeout(() => {
-      endQuizRevealSound.play()
       $("body")
         .after(`
         <div class="container container-game-end text-center">
           <div class="row">
             <div class="col-12">
               <h1>Congratulations<h1>
-                <p>You've made it to the end of the quiz!</p>
-                <p>You managed to answer ${playerScore} questions correctly!</p>
-                <p>Earning you the Rank of <span class="noob-text">NOOB<b></b></p>
+              <p>You've made it to the end of the quiz!</p>
+              <p>You managed to answer ${playerScore} questions correctly!</p>
+              <p>Earning you the Rank of:</p>
+            </div>
+            <div class="col-12 rank-display">
+              <span class="bronze-text">BRONZE<b></b><br>
+              <i class="fa-solid fa-medal fa-beat rank-bronze"></i>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
-          </div>
+         </div>
         </div>`)
+      endQuizRevealSound.play()
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
-    }, 1000);
+    }, 500);
     setTimeout(() => {
-      endQuizRevealSound.play()
       $("body")
         .after(`
         <div class="container container-game-end text-center">
           <div class="row">
             <div class="col-12">
               <h1>Congratulations<h1>
-                <p>You've made it to the end of the quiz!</p>
-                <p>You managed to answer ${playerScore} questions correctly!</p>
-                <p>Earning you the Rank of <span class="average-text">utterly average<b></b></p>
+              <p>You've made it to the end of the quiz!</p>
+              <p>You managed to answer ${playerScore} questions correctly!</p>
+              <p>Earning you the Rank of:</p>
+            </div>
+            <div class="col-12 rank-display">
+              <span class="silver-text">SILVER<b></b><br>
+              <i class="fa-solid fa-medal fa-beat rank-silver"></i>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
+      endQuizRevealSound.play()
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
     }, 1000);
-    endQuizRevealSound.play()
     setTimeout(() => {
       $("body")
         .after(`
@@ -439,22 +454,24 @@ function endGameSequence() {
           <div class="row">
             <div class="col-12">
               <h1>Congratulations<h1>
-                <p>You've made it to the end of the quiz!</p>
-                <p>You managed to answer ${playerScore} questions correctly!</p>
-                <p>Earning you the Rank of <span class="epic-text">extremely epic<b></b></p>
+              <p>You've made it to the end of the quiz!</p>
+              <p>You managed to answer ${playerScore} questions correctly!</p>
+              <p>Earning you the Rank of:</p>
+            </div>
+            <div class="col-12 rank-display">
+              <span class="gold-text">GOLD<b></b><br>
+              <i class="fa-solid fa-medal fa-beat rank-gold" style="color: #ddbd1d;"></i>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
-          </div>
         </div>`)
+      endQuizRevealSound.play()
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
     setTimeout(() => {
       $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
     }, 1000);
-    endQuizRevealSound.play()
     setTimeout(() => {
       $("body")
         .after(`
@@ -462,16 +479,20 @@ function endGameSequence() {
           <div class="row">
             <div class="col-12">
               <h1>Congratulations<h1>
-                <p>You've made it to the end of the quiz!</p>
-                <p>You managed to answer ${playerScore} questions correctly!</p>
-                <p>Earning you the Rank of <span class="legendary-text">legendary<b></b></p>
+              <p>You've made it to the end of the quiz!</p>
+              <p>You managed to answer ${playerScore} questions correctly!</p>
+              <p>Earning you the Rank of:</p>
+            </div>
+            <div class="col-12 rank-display">
+              <span class="diamond-text">DIAMOND<b></b><br>
+              <i class="fa-solid fa-gem fa-beat rank-diamond"></i>
             </div>
             <div class="col-12">
-              <button type="button" class="btn-restart" onclick="startGame()">RESTART</button>
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
         </div>`)
+      endQuizRevealSound.play()
     }, 2500);
   }
 }
