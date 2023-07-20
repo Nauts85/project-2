@@ -165,17 +165,16 @@ const questions = [
 
 
 
-//game sound effects.
-let mainTheme = new Audio('../project-2/assests/audio/bg-music-game.wav');
-let correctAnswerSound = new Audio('../project-2/assests/audio/sound-correct-answer.wav');
-let incorrectAnswerSound = new Audio('../project-2/assests/audio/sound-incorrect-answer.wav');
-let gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.wav');
-let mouseOverSound = new Audio('../project-2/assests/audio/sound-mouse-over.wav');
-let endQuizRevealSound = new Audio('../project-2/assests/audio/sound-quiz-end-reveal.wav');
-let introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.wav');
-let introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.wav');
-let halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.wav');
-let finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.wav');
+// game sound effects.
+const correctAnswerSound = new Audio('../project-2/assests/audio/sound-correct-answer.wav');
+const incorrectAnswerSound = new Audio('../project-2/assests/audio/sound-incorrect-answer.wav');
+const gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.wav');
+const mouseOverSound = new Audio('../project-2/assests/audio/sound-mouse-over.wav');
+const endQuizRevealSound = new Audio('../project-2/assests/audio/sound-quiz-end-reveal.wav');
+const introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.wav');
+const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.wav');
+const halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.wav');
+const finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.wav');
 
 // document elements.
 const questionElement = document.getElementById('question-area');
@@ -191,10 +190,10 @@ let currentQuestionIndex;
 let quizQuestions = questions;
 let questionCounter;
 
-//player score variable
+// player score variable
 let playerScore;
 
-//code to be run when the start button is clicked.
+// code to be run when the start button is clicked.
 function startGame() {
   resetScore();
   resetQuestionCounter();
@@ -208,7 +207,7 @@ function getNextQuestion() {
   displayQuestion(quizQuestions[currentQuestionIndex]);
 }
 
-//function to display the quiz question and the answer options.
+// function to display the quiz question and the answer options.
 function displayQuestion(question) {
   questionElement.innerText = question.question;
   optionButtonOne.innerText = question.option1;
@@ -217,28 +216,34 @@ function displayQuestion(question) {
   optionButtonFour.innerText = question.option4;
 }
 
-//Reset Score Function.
+// Reset Score Function.
 function resetScore() {
   playerScore = 0;
   $('#score-counter').text(playerScore);
-};
+}
 
-//function to reset the question counter when game starts.
+// function to reset the question counter when game starts.
 function resetQuestionCounter() {
   questionCounter = 1;
   $("#question-counter").text(questionCounter);
 }
 
-//function to add one to player score.
+// function to add one to player score.
 function addScoreAnimation() {
   $(".add-one").text("+1").show(500).hide(2500);
   playerScore++;
   playerScoreElement.innerText = playerScore;
 }
 
-//function to play sound on all buttons on mouse over.
+// function to play sound on all buttons on mouse over.
 $('button').on('mouseover', function () {
   mouseOverSound.play();
+});
+
+// function to play the theme tune when the quiz loads.
+$('audio#theme').ready(function playTheme() {
+  $('audio#theme')[0].play();
+  $('audio#theme')[0].loop = true;
 });
 
 /**
@@ -246,18 +251,19 @@ $('button').on('mouseover', function () {
  * Then gets the value of the answer key from the current question.
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
+ * functions are used to check the question counter and the player score to display messages to the progress display.
  */
 $("button.btn-option").on("click", function getAnswer(answer) {
   $('button.btn-option').prop('disabled', true);
   let selectedAnswer = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
   if (selectedAnswer === answer) {
-    $("#display").removeClass("hidden").text("CORRECT")
+    $("#display").removeClass("hidden").text("CORRECT");
     this.classList.add("correct");
     correctAnswerSound.play();
     addScoreAnimation();
   } else {
-    $("#display").removeClass("hidden").text("Incorrect")
+    $("#display").removeClass("hidden").text("Incorrect");
     this.classList.add("incorrect");
     incorrectAnswerSound.play();
   }
@@ -284,67 +290,63 @@ $('#btn-start').on('click', function gameIntro() {
   $('#btn-start,#btn-rules').fadeOut(1000);
   setTimeout(() => {
     introSoundPresenting.play();
-    $('.first-intro').fadeIn(2000).fadeOut(2000);
+    $('.first-intro').fadeIn(2500).fadeOut(2000);
   }, 2000);
   setTimeout(() => {
     introSoundTrivia.play();
-    $('.second-intro').fadeIn(2000).fadeOut(2000);
-  }, 7000);
+    $('.second-intro').fadeIn(2500).fadeOut(2000);
+  }, 7500);
   setTimeout(() => {
     window.location.replace('game.html');
-  }, 12000);
+  }, 13000);
 });
 
-//function to trigger divs to split and launch the game.
+// function to trigger divs to split and launch the game.
 $(window).on("load", function () {
   window.setTimeout(revealDivLeft, 2750);
   window.setTimeout(revealDivRight, 2750);
   startGame();
 });
 
+// function to return to the main menu.
 $('#exit-button').on('click', function () {
   if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
     mainMenuReturn();
   }
-})
+});
 
-//function to open the game rules
+// function to open the game rules
 $('#btn-rules').on('click', function showRules() {
   $('.rules-container').fadeIn(1000);
-})
+});
 
-//function to close the game rules
+// function to close the game rules
 $('#close-rules-btn').on('click', function closeRules() {
   $('.rules-container').fadeOut(1000);
-})
+});
 
-//function to animate divs after intro.
+// function to animate divs after intro.
 function revealDivRight() {
   $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3000);
   $('#game-reveal-div-2').hide(500);
 }
 
-//function to animate divs after intro.
+// function to animate divs after intro.
 function revealDivLeft() {
   $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3000);
   $('#game-reveal-div-1').hide(500);
 }
 
-//function to play the theme tune when the quiz loads.
-$('audio#theme').ready(function playTheme() {
-  $('audio#theme')[0].play();
-  $('audio#theme')[0].loop = true;
-})
-
+// function to return to the main menu.
 function mainMenuReturn() {
   window.location.replace('index.html');
 }
 
-//function to encourage the user at certain points in the quiz.
+// function to encourage the user at certain points in the quiz.
 function midGameSequence() {
   if (questionCounter == 10) {
     setTimeout(() => {
-      halfWaySound.play()
+      halfWaySound.play();
       $("#progress-display")
         .removeClass("hidden")
         .html(`<p>HALF</p> <p>WAY!</p>`)
@@ -353,7 +355,7 @@ function midGameSequence() {
     }, 750);
     if (playerScore >= 1 && playerScore <= 5) {
       setTimeout(() => {
-        halfWaySound.play()
+        halfWaySound.play();
         $("#progress-display")
           .html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`)
           .fadeIn(1750)
@@ -361,7 +363,7 @@ function midGameSequence() {
       }, 2000);
     } else if (playerScore >= 6 && playerScore <= 10) {
       setTimeout(() => {
-        halfWaySound.play()
+        halfWaySound.play();
         $("#progress-display")
           .html(`<p>WOW!</p> <p>YOUR</p> <p>GOOD!</>`)
           .fadeIn(1750)
@@ -371,7 +373,7 @@ function midGameSequence() {
   }
   if (questionCounter == 20) {
     setTimeout(() => {
-      finalQuestionSound.play()
+      finalQuestionSound.play();
       $("#progress-display")
         .removeClass("hidden")
         .html(`<p>FINAL</p> <p>QUESTION!</p>`)
@@ -393,6 +395,7 @@ function endGameSequence() {
     setTimeout(() => {
       $("body *").fadeOut(2000);
     }, 1000);
+    // Bronze rank template.
     setTimeout(() => {
       $("body")
         .after(`
@@ -412,13 +415,14 @@ function endGameSequence() {
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
          </div>
-        </div>`)
-      endQuizRevealSound.play()
+        </div>`);
+      endQuizRevealSound.play();
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
     setTimeout(() => {
-      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+      $("body *").fadeOut(2000);
     }, 500);
+    // Silver rank template.
     setTimeout(() => {
       $("body")
         .after(`
@@ -438,13 +442,14 @@ function endGameSequence() {
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
-        </div>`)
-      endQuizRevealSound.play()
+        </div>`);
+      endQuizRevealSound.play();
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
     setTimeout(() => {
-      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+      $("body *").fadeOut(2000);
     }, 1000);
+    // Gold rank template.
     setTimeout(() => {
       $("body")
         .after(`
@@ -463,13 +468,14 @@ function endGameSequence() {
             <div class="col-12">
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
-        </div>`)
-      endQuizRevealSound.play()
+        </div>`);
+      endQuizRevealSound.play();
     }, 2500);
   } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
     setTimeout(() => {
-      $(".quiz-container,#exit-button,.player-score,#score-counter").fadeOut(2000);
+      $("body *").fadeOut(2000);
     }, 1000);
+    // Diamond rank template.
     setTimeout(() => {
       $("body")
         .after(`
@@ -489,8 +495,8 @@ function endGameSequence() {
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
           </div>
-        </div>`)
-      endQuizRevealSound.play()
+        </div>`);
+      endQuizRevealSound.play();
     }, 2500);
   }
 }
