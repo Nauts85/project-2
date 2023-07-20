@@ -18,7 +18,42 @@
   height: 100vh;
 }
 
-/*---------------------------------------------Buttons-------------*/
+/*---------------------------------------------Icons-------------*/
+
+.rank-bronze {
+  color: #CD7F32;
+  font-size: 7.5rem;
+  margin: 25px;
+  border: 6px inset #fafafa;
+  border-radius: 7px 7px 7px 7px;
+}
+
+.rank-silver {
+  color: #C0C0C0;
+  font-size: 7.5rem;
+  margin: 25px;
+  border: 6px inset #fafafa;
+  border-radius: 7px 7px 7px 7px;
+}
+
+.rank-gold {
+  color: #FFD700;
+  font-size: 7.5rem;
+  margin: 25px;
+  border: 6px inset #fafafa;
+  border-radius: 7px 7px 7px 7px;
+}
+
+.rank-diamond {
+  color: #b9f2ff;
+  font-size: 7.5rem;
+  margin: 25px;
+  border: 6px inset #fafafa;
+  border-radius: 7px 7px 7px 7px;
+}
+
+
+/*---------------------------------------------Buttons + hovers-------------*/
 
 button:hover {
   cursor: crosshair;
@@ -45,7 +80,27 @@ button:hover {
   cursor: crosshair;
 }
 
-
+.btn-main-menu {
+  font-family: 'Orbitron', sans-serif;
+  font-size: calc(0.5rem + 1.5vw);
+  color: black;
+  width: 260px;
+  height: 60px;
+  font-weight: 800;
+  margin: 10px 30px;
+  border-radius: 20px 0px 20px 0px;
+  box-shadow: 3px 3px 3px;
+  background: #91a4a1;
+  background: -moz-linear-gradient(-45deg,
+      #91a4a1 0%,
+      #fafafa 85%,
+      #636b75 100%);
+  background: -webkit-linear-gradient(-45deg,
+      #91a4a1 0%,
+      #fafafa 85%,
+      #636b75 100%);
+  background: linear-gradient(135deg, #91a4a1 0%, #fafafa 85%, #636b75 100%);
+}
 
 #btn-rules {
   font-family: 'Orbitron', sans-serif;
@@ -84,16 +139,10 @@ button:hover {
   box-shadow: 3px 3px 3px;
 }
 
-
-.btn-main-menu:hover,
-.btn-restart:hover {
+#close-rules-btn:hover,
+.btn-main-menu:hover {
   background: dimgrey;
 }
-
-#close-rules-btn:hover {
-  background-color: dimgrey;
-}
-
 
 #btn-start {
   font-family: 'Orbitron', sans-serif;
@@ -157,29 +206,6 @@ button:hover {
 #exit-button:hover {
   color: black;
 }
-
-.btn-main-menu {
-  font-family: 'Orbitron', sans-serif;
-  font-size: calc(0.5rem + 1.5vw);
-  color: black;
-  width: 260px;
-  height: 60px;
-  font-weight: 800;
-  margin: 10px 30px;
-  border-radius: 20px 0px 20px 0px;
-  box-shadow: 3px 3px 3px;
-  background: #91a4a1;
-  background: -moz-linear-gradient(-45deg,
-      #91a4a1 0%,
-      #fafafa 85%,
-      #636b75 100%);
-  background: -webkit-linear-gradient(-45deg,
-      #91a4a1 0%,
-      #fafafa 85%,
-      #636b75 100%);
-  background: linear-gradient(135deg, #91a4a1 0%, #fafafa 85%, #636b75 100%);
-}
-
 
 /*---------------------------------------------Text-Areas-------------*/
 
@@ -263,20 +289,32 @@ button:hover {
       #3F0468 100%);
 }
 
-
-
-#display {
-  font-family: 'Goldman', cursive;
-  color: #AB95BA;
-  width: fit-content;
-  height: fit-content;
+.bronze-text {
+  color: #CD7F32;
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 800;
+  letter-spacing: 0.4rem;
 }
 
-#progress-display {
-  font-family: 'Goldman', cursive;
-  color: #AB95BA;
-  width: fit-content;
-  height: fit-content;
+.silver-text {
+  color: #C0C0C0;
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 800;
+  letter-spacing: 0.4rem;
+}
+
+.gold-text {
+  color: #FFD700;
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 800;
+  letter-spacing: 0.4rem;
+}
+
+.diamond-text {
+  color: #b9f2ff;
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 800;
+  letter-spacing: 0.4rem;
 }
 
 #question-area {
@@ -294,7 +332,6 @@ button:hover {
   font-weight: 900;
   color: #fafafa;
 }
-
 
 #answer-box {
   position: absolute;
@@ -357,6 +394,14 @@ button:hover {
   z-index: 1;
   background-image: url(../images/Intro-bg-img.jpg);
   background-size: cover;
+}
+
+#progress-display,
+#display {
+  font-family: 'Goldman', cursive;
+  color: #AB95BA;
+  width: fit-content;
+  height: fit-content;
 }
 
 /*---------------------------------------------Animation + Keyframes-------------*/
@@ -518,67 +563,6 @@ footer {
 .rules-spacer {
   margin: 30px 15px;
 }
-
-.bronze-text {
-  color: #CD7F32;
-  font-size: calc(2rem + 1.5vw);
-  font-weight: 800;
-  letter-spacing: 0.4rem;
-}
-
-.rank-bronze {
-  color: #CD7F32;
-  font-size: 7.5rem;
-  margin: 25px;
-  border: 6px inset #fafafa;
-  border-radius: 7px 7px 7px 7px;
-}
-
-.silver-text {
-  color: #C0C0C0;
-  font-size: calc(2rem + 1.5vw);
-  font-weight: 800;
-  letter-spacing: 0.4rem;
-}
-
-.rank-silver {
-  color: #C0C0C0;
-  font-size: 7.5rem;
-  margin: 25px;
-  border: 6px inset #fafafa;
-  border-radius: 7px 7px 7px 7px;
-}
-
-.gold-text {
-  color: #FFD700;
-  font-size: calc(2rem + 1.5vw);
-  font-weight: 800;
-  letter-spacing: 0.4rem;
-}
-
-.rank-gold {
-  color: #FFD700;
-  font-size: 7.5rem;
-  margin: 25px;
-  border: 6px inset #fafafa;
-  border-radius: 7px 7px 7px 7px;
-}
-
-.diamond-text {
-  color: #b9f2ff;
-  font-size: calc(2rem + 1.5vw);
-  font-weight: 800;
-  letter-spacing: 0.4rem;
-}
-
-.rank-diamond {
-  color: #b9f2ff;
-  font-size: 7.5rem;
-  margin: 25px;
-  border: 6px inset #fafafa;
-  border-radius: 7px 7px 7px 7px;
-}
-
 
 /*---------------------------------------------Media-Queries-------------*/
 
