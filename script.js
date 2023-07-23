@@ -166,15 +166,15 @@ const questions = [
 
 
 // game sound effects.
-const correctAnswerSound = new Audio('../project-2/assests/audio/sound-correct-answer.wav');
-const incorrectAnswerSound = new Audio('../project-2/assests/audio/sound-incorrect-answer.wav');
-const gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.wav');
-const mouseOverSound = new Audio('../project-2/assests/audio/sound-mouse-over.wav');
-const endQuizRevealSound = new Audio('../project-2/assests/audio/sound-quiz-end-reveal.wav');
-const introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.wav');
-const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.wav');
-const halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.wav');
-const finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.wav');
+const correctAnswerSound = new Audio('../project-2/assests/audio/sound-correct-answer.mp3');
+const incorrectAnswerSound = new Audio('../project-2/assests/audio/sound-incorrect-answer.mp3');
+const gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.mp3');
+const mouseOverSound = new Audio('../project-2/assests/audio/sound-mouse-over.mp3');
+const endQuizRevealSound = new Audio('../project-2/assests/audio/sound-quiz-end-reveal.mp3');
+const introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.mp3');
+const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.mp3');
+const halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.mp3');
+const finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.mp3');
 
 // document elements.
 const questionElement = document.getElementById('question-area');
