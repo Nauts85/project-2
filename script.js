@@ -168,11 +168,11 @@ const questions = [
 // game sound effects.
 const correctAnswerSound = new Audio('../project-2/assests/audio/sound-correct-answer.mp3');
 const incorrectAnswerSound = new Audio('../project-2/assests/audio/sound-incorrect-answer.mp3');
-const gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.mp3');
+const gameStartBtnSound = new Audio('../project-2/assests/audio/sound-game-start-btn.wav');
 const mouseOverSound = new Audio('../project-2/assests/audio/sound-mouse-over.mp3');
 const endQuizRevealSound = new Audio('../project-2/assests/audio/sound-quiz-end-reveal.mp3');
-const introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.mp3');
-const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.mp3');
+const introSoundPresenting = new Audio('../project-2/assests/audio/sound-intro-presenting.wav');
+const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivia.wav');
 const halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.mp3');
 const finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.mp3');
 
@@ -253,11 +253,12 @@ $('audio#theme').ready(function playTheme() {
  * Player score is incremented if correct and gets the next question if incorrect.
  * functions are used to check the question counter and the player score to display messages to the progress display.
  */
-$("button.btn-option").on("click", function getAnswer(answer) {
-  $('button.btn-option').prop('disabled', true);
-  let selectedAnswer = this.innerText;
+$("button.btn-option").on("click", function getAnswer(answer, selected) {
+  setTimeout(questionChange, 4500);
+  $("button.btn-option").prop("disabled", true);
+  selected = this.innerText;
   answer = quizQuestions[currentQuestionIndex].answer;
-  if (selectedAnswer === answer) {
+  if (selected === answer) {
     $("#display").removeClass("hidden").text("CORRECT");
     this.classList.add("correct");
     correctAnswerSound.play();
@@ -267,18 +268,21 @@ $("button.btn-option").on("click", function getAnswer(answer) {
     this.classList.add("incorrect");
     incorrectAnswerSound.play();
   }
-  currentQuestionIndex++;
-  setTimeout(() => {
-    $("#display").addClass("hidden");
-    $('button.btn-option').prop('disabled', false);
-    this.classList.remove("correct", "incorrect");
-    questionCounter++;
-    midGameSequence();
-    endGameSequence();
-    getNextQuestion();
-    questionCounterElement.innerText = questionCounter;
-  }, 4250);
 });
+
+// function to check the game status and get the next question.
+function questionChange() {
+  $("#display").addClass("hidden");
+  $("button.btn-option")
+    .prop("disabled", false)
+    .removeClass("correct", "incorrect");
+  questionCounter++;
+  currentQuestionIndex++;
+  midGameSequence();
+  rankRevealSequence();
+  getNextQuestion();
+  questionCounterElement.innerText = questionCounter;
+}
 
 /**
  * Event handler for the start button on index.html
@@ -324,6 +328,7 @@ $('#btn-rules').on('click', function showRules() {
 $('#close-rules-btn').on('click', function closeRules() {
   $('.rules-container').fadeOut(1000);
 });
+
 
 // function to animate divs after intro.
 function revealDivRight() {
@@ -390,15 +395,14 @@ function midGameSequence() {
  * the user score is totaled and logic is used to decide the output.
  * template literals are used to simply change the layout of the container and its elements.
  */
-function endGameSequence() {
-  if (questionCounter == 21 && playerScore <= 5) {
-    setTimeout(() => {
-      $("body *").fadeOut(2000);
-    }, 1000);
-    // Bronze rank template.
+function rankRevealSequence(iconRank) {
+  if (questionCounter == 21) {
+    $("body *").fadeOut(2000);
+    iconRank = calculateRank();
     setTimeout(() => {
       $("body")
-        .after(`
+        .after(
+          `
         <div class="container container-game-end text-center">
           <div class="row">
             <div class="col-12">
@@ -408,96 +412,38 @@ function endGameSequence() {
               <p>Earning you the Rank of:</p>
             </div>
             <div class="col-12 rank-display">
-              <span class="bronze-text">BRONZE<b></b><br>
-              <i class="fa-solid fa-medal fa-beat rank-bronze"></i>
+              ${iconRank}
             </div>
             <div class="col-12">
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
          </div>
-        </div>`);
+        </div>`
+        )
+        .fadeIn(1500);
       endQuizRevealSound.play();
     }, 2500);
+  }
+}
+
+function calculateRank(bronze, gold, silver, diamond) {
+  bronze = `<span class="bronze-text">BRONZE</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-bronze"></i>`;
+  silver = `<span class="silver-text">SILVER</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-silver"></i>`;
+  gold = `<span class="gold-text">GOLD</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-gold"></i>`;
+  diamond = `<span class="diamond-text">DIAMOND</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-diamond"></i>`;
+
+  if (questionCounter == 21 && playerScore <= 5) {
+    return bronze;
   } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
-    setTimeout(() => {
-      $("body *").fadeOut(2000);
-    }, 500);
-    // Silver rank template.
-    setTimeout(() => {
-      $("body")
-        .after(`
-        <div class="container container-game-end text-center">
-          <div class="row">
-            <div class="col-12">
-              <h1>Congratulations<h1>
-              <p>You've made it to the end of the quiz!</p>
-              <p>You managed to answer ${playerScore} questions correctly!</p>
-              <p>Earning you the Rank of:</p>
-            </div>
-            <div class="col-12 rank-display">
-              <span class="silver-text">SILVER<b></b><br>
-              <i class="fa-solid fa-medal fa-beat rank-silver"></i>
-            </div>
-            <div class="col-12">
-              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
-            </div>
-          </div>
-        </div>`);
-      endQuizRevealSound.play();
-    }, 2500);
+    return silver;
   } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
-    setTimeout(() => {
-      $("body *").fadeOut(2000);
-    }, 1000);
-    // Gold rank template.
-    setTimeout(() => {
-      $("body")
-        .after(`
-        <div class="container container-game-end text-center">
-          <div class="row">
-            <div class="col-12">
-              <h1>Congratulations<h1>
-              <p>You've made it to the end of the quiz!</p>
-              <p>You managed to answer ${playerScore} questions correctly!</p>
-              <p>Earning you the Rank of:</p>
-            </div>
-            <div class="col-12 rank-display">
-              <span class="gold-text">GOLD<b></b><br>
-              <i class="fa-solid fa-medal fa-beat rank-gold" style="color: #ddbd1d;"></i>
-            </div>
-            <div class="col-12">
-              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
-            </div>
-        </div>`);
-      endQuizRevealSound.play();
-    }, 2500);
+    return gold;
   } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
-    setTimeout(() => {
-      $("body *").fadeOut(2000);
-    }, 1000);
-    // Diamond rank template.
-    setTimeout(() => {
-      $("body")
-        .after(`
-        <div class="container container-game-end text-center">
-          <div class="row">
-            <div class="col-12">
-              <h1>Congratulations<h1>
-              <p>You've made it to the end of the quiz!</p>
-              <p>You managed to answer ${playerScore} questions correctly!</p>
-              <p>Earning you the Rank of:</p>
-            </div>
-            <div class="col-12 rank-display">
-              <span class="diamond-text">DIAMOND<b></b><br>
-              <i class="fa-solid fa-gem fa-beat rank-diamond"></i>
-            </div>
-            <div class="col-12">
-              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
-            </div>
-          </div>
-        </div>`);
-      endQuizRevealSound.play();
-    }, 2500);
+    return diamond;
   }
 }
 
