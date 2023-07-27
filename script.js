@@ -240,6 +240,15 @@ $('button').on('mouseover', function () {
   mouseOverSound.play();
 });
 
+// function to mute the game theme.
+$('#check-mute').on('click', function () {
+  isChecked = $('#check-mute').is(':checked')
+   if (isChecked) {
+     $('audio#theme').prop('muted', true)
+   } 
+   else $('audio#theme').prop('muted', false)
+})
+
 // function to play the theme tune when the quiz loads.
 $('audio#theme').ready(function playTheme() {
   $('audio#theme')[0].play();
@@ -313,7 +322,7 @@ $(window).on("load", function () {
 });
 
 // function to return to the main menu.
-$('#exit-button').on('click', function () {
+$('#btn-exit').on('click', function () {
   if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
     mainMenuReturn();
   }
@@ -329,6 +338,15 @@ $('#close-rules-btn').on('click', function closeRules() {
   $('.rules-container').fadeOut(1000);
 });
 
+// function open the options menu
+$('#btn-options').on('click', function showOptionsMenu() {
+  $('.options-container').fadeIn(500);
+});
+
+// function to close the options menu
+$('#btn-close-options').on('click', function closeOptionsMenu() {
+  $('.options-container').fadeOut(500);
+});
 
 // function to animate divs after intro.
 function revealDivRight() {
