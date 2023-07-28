@@ -103,6 +103,10 @@ input[type="checkbox"] {
   text-align: center;
 }
 
+.dropdown-item {
+  cursor: crosshair;
+}
+
 .btn-option {
   font-family: 'Changa', sans-serif;
   width: 240px;
@@ -242,6 +246,10 @@ input[type="checkbox"] {
 
 /*---------------------------------------------Text-Areas-------------*/
 
+p {
+  font-size: calc(1rem + 1.5vw);
+}
+
 .rules-header {
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
@@ -340,6 +348,10 @@ input[type="checkbox"] {
       #3F0468 100%);
 }
 
+.rank-header {
+  font-size: calc(1rem + 1.5vw);
+}
+
 .bronze-text {
   color: #CD7F32;
   font-size: calc(2rem + 1.5vw);
@@ -403,7 +415,7 @@ input[type="checkbox"] {
   font-size: calc(1.3rem + 1.5vw);
   font-weight: 900;
   color: #fafafa;
-  padding-left: 10px;
+  padding-left: 2px;
 }
 
 .second-intro {
