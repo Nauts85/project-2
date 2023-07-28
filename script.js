@@ -250,7 +250,7 @@ $('#check-mute').on('click', function () {
 })
 
 // function to play the theme tune when the quiz loads.
-$('audio#theme').ready(function playTheme() {
+$('audio#theme').ready(function() {
   $('audio#theme')[0].play();
   $('audio#theme')[0].loop = true;
 });
@@ -298,7 +298,7 @@ function questionChange() {
  * each element is faded in, totalling 4 seconds per transition
  * ending with the introduction to the first game section
  */
-$('#btn-start').on('click', function gameIntro() {
+$('#btn-start').on('click', function() {
   gameStartBtnSound.play();
   $('#btn-start,#btn-rules').fadeOut(1000);
   setTimeout(() => {
@@ -322,29 +322,24 @@ $(window).on("load", function () {
 });
 
 // function to return to the main menu.
-$('#btn-exit').on('click', function () {
+$('#btn-exit').on('click', function mainMenuReturn() {
   if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
-    mainMenuReturn();
+    window.location.replace('index.html');
   }
 });
 
 // function to open the game rules
-$('#btn-rules').on('click', function showRules() {
+$('#btn-rules').on('click', function() {
   $('.rules-container').fadeIn(1000);
 });
 
 // function to close the game rules
-$('#close-rules-btn').on('click', function closeRules() {
+$('#close-rules-btn').on('click', function() {
   $('.rules-container').fadeOut(1000);
 });
 
-// function open the options menu
-$('#btn-options').on('click', function showOptionsMenu() {
-  $('.options-container').fadeIn(500);
-});
-
 // function to close the options menu
-$('#btn-close-options').on('click', function closeOptionsMenu() {
+$('#btn-close-options').on('click', function() {
   $('.options-container').fadeOut(500);
 });
 
@@ -358,11 +353,6 @@ function revealDivRight() {
 function revealDivLeft() {
   $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3000);
   $('#game-reveal-div-1').hide(500);
-}
-
-// function to return to the main menu.
-function mainMenuReturn() {
-  window.location.replace('index.html');
 }
 
 // function to encourage the user at certain points in the quiz.
