@@ -176,30 +176,38 @@ const introSoundTrivia = new Audio('../project-2/assests/audio/sound-intro-trivi
 const halfWaySound = new Audio('../project-2/assests/audio/sound-half-way.mp3');
 const finalQuestionSound = new Audio('../project-2/assests/audio/sound-final-question.mp3');
 
-// document elements.
 const questionElement = document.getElementById('question-area');
 const optionButtonOne = document.getElementById('opt-1');
 const optionButtonTwo = document.getElementById('opt-2');
 const optionButtonThree = document.getElementById('opt-3');
 const optionButtonFour = document.getElementById('opt-4');
-let playerScoreElement = document.getElementById('score-counter');
-let questionCounterElement = document.getElementById('question-counter');
+const playerScoreElement = document.getElementById('score-counter');
+const questionCounterElement = document.getElementById('question-counter');
 
-// question variables.
 let currentQuestionIndex;
 let quizQuestions = questions;
 let questionCounter;
 
-// player score variable
 let playerScore;
 
-// code to be run when the start button is clicked.
+
 function startGame() {
   resetScore();
   resetQuestionCounter();
   currentQuestionIndex = 0;
   quizQuestions = questions;
   getNextQuestion();
+}
+
+
+function resetScore() {
+  playerScore = 0;
+  $('#score-counter').text(playerScore);
+}
+
+function resetQuestionCounter() {
+  questionCounter = 1;
+  $("#question-counter").text(questionCounter);
 }
 
 // defines question as questions[0].question
@@ -216,51 +224,12 @@ function displayQuestion(question) {
   optionButtonFour.innerText = question.option4;
 }
 
-// Reset Score Function.
-function resetScore() {
-  playerScore = 0;
-  $('#score-counter').text(playerScore);
-}
-
-// function to reset the question counter when game starts.
-function resetQuestionCounter() {
-  questionCounter = 1;
-  $("#question-counter").text(questionCounter);
-}
-
-// function to add one to player score.
-function addScoreAnimation() {
-  $(".add-one").text("+1").show(500).hide(2500);
-  playerScore++;
-  playerScoreElement.innerText = playerScore;
-}
-
-// function to play sound on all buttons on mouse over.
-$('button').on('mouseover', function () {
-  mouseOverSound.play();
-});
-
-// function to mute the game theme.
-$('#check-mute').on('click', function () {
-  isChecked = $('#check-mute').is(':checked')
-   if (isChecked) {
-     $('audio#theme').prop('muted', true)
-   } 
-   else $('audio#theme').prop('muted', false)
-})
-
-// function to play the theme tune when the quiz loads.
-$('audio#theme').ready(function() {
-  $('audio#theme')[0].play();
-  $('audio#theme')[0].loop = true;
-});
-
 /**
  * On click event handler that gets the value of the button clicked.
+ * Then calls the question change function.
  * Then gets the value of the answer key from the current question.
  * Logic is then used to compare both values.
  * Player score is incremented if correct and gets the next question if incorrect.
- * functions are used to check the question counter and the player score to display messages to the progress display.
  */
 $("button.btn-option").on("click", function getAnswer(answer, selected) {
   setTimeout(questionChange, 4500);
@@ -279,6 +248,13 @@ $("button.btn-option").on("click", function getAnswer(answer, selected) {
   }
 });
 
+// function to add one to player score.
+function addScoreAnimation() {
+  $(".add-one").text("+1").show(500).hide(2500);
+  playerScore++;
+  playerScoreElement.innerText = playerScore;
+}
+
 // function to check the game status and get the next question.
 function questionChange() {
   $("#display").addClass("hidden");
@@ -291,68 +267,6 @@ function questionChange() {
   rankRevealSequence();
   getNextQuestion();
   questionCounterElement.innerText = questionCounter;
-}
-
-/**
- * Event handler for the start button on index.html
- * each element is faded in, totalling 4 seconds per transition
- * ending with the introduction to the first game section
- */
-$('#btn-start').on('click', function() {
-  gameStartBtnSound.play();
-  $('#btn-start,#btn-rules').fadeOut(1000);
-  setTimeout(() => {
-    introSoundPresenting.play();
-    $('.first-intro').fadeIn(2500).fadeOut(2000);
-  }, 2000);
-  setTimeout(() => {
-    introSoundTrivia.play();
-    $('.second-intro').fadeIn(2500).fadeOut(2000);
-  }, 7500);
-  setTimeout(() => {
-    window.location.replace('game.html');
-  }, 13000);
-});
-
-// function to trigger divs to split and launch the game.
-$(window).on("load", function () {
-  window.setTimeout(revealDivLeft, 2750);
-  window.setTimeout(revealDivRight, 2750);
-  startGame();
-});
-
-// function to return to the main menu.
-$('#btn-exit,#btn-main-menu').on('click', function mainMenuReturn() {
-  if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
-    window.location.replace('index.html');
-  }
-});
-
-// function to open the game rules
-$('#btn-rules').on('click', function() {
-  $('.rules-container').fadeIn(1000);
-});
-
-// function to close the game rules
-$('#close-rules-btn').on('click', function() {
-  $('.rules-container').fadeOut(1000);
-});
-
-// function to close the options menu
-$('#btn-close-options').on('click', function() {
-  $('.options-container').fadeOut(500);
-});
-
-// function to animate divs after intro.
-function revealDivRight() {
-  $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3000);
-  $('#game-reveal-div-2').hide(500);
-}
-
-// function to animate divs after intro.
-function revealDivLeft() {
-  $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3000);
-  $('#game-reveal-div-1').hide(500);
 }
 
 // function to encourage the user at certain points in the quiz.
@@ -371,17 +285,17 @@ function midGameSequence() {
         halfWaySound.play();
         $("#progress-display")
           .html(`<p>DONT</p> <p>GIVE</p> <p>UP!</>`)
-          .fadeIn(1750)
+          .fadeIn(2000)
           .fadeOut(1250);
-      }, 2000);
+      }, 3750);
     } else if (playerScore >= 6 && playerScore <= 10) {
       setTimeout(() => {
         halfWaySound.play();
         $("#progress-display")
           .html(`<p>WOW!</p> <p>YOUR</p> <p>GOOD!</>`)
-          .fadeIn(1750)
+          .fadeIn(2000)
           .fadeOut(1250);
-      }, 2000);
+      }, 3750);
     }
   }
   if (questionCounter == 20) {
@@ -396,6 +310,29 @@ function midGameSequence() {
   }
   $("#progress-display").addClass("hidden");
 }
+
+// Function to calculate user rank.
+function calculateRank(bronze, gold, silver, diamond) {
+  bronze = `<span class="bronze-text">BRONZE</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-bronze"></i>`;
+  silver = `<span class="silver-text">SILVER</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-silver"></i>`;
+  gold = `<span class="gold-text">GOLD</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-gold"></i>`;
+  diamond = `<span class="diamond-text">DIAMOND</span><br>
+           <i class="fa-solid fa-medal fa-beat rank-diamond"></i>`;
+
+  if (questionCounter == 21 && playerScore <= 5) {
+    return bronze;
+  } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
+    return silver;
+  } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
+    return gold;
+  } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
+    return diamond;
+  }
+}
+
 
 /**
  * Function for the end of the quiz
@@ -423,7 +360,7 @@ function rankRevealSequence(iconRank) {
               ${iconRank}
             </div>
             <div class="col-12 p-0">
-              <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
+              <button type="button" id="btn-main-menu">MAIN MENU</button>
             </div>
          </div>
         </div>`
@@ -434,26 +371,86 @@ function rankRevealSequence(iconRank) {
   }
 }
 
-function calculateRank(bronze, gold, silver, diamond) {
-  bronze = `<span class="bronze-text">BRONZE</span><br>
-           <i class="fa-solid fa-medal fa-beat rank-bronze"></i>`;
-  silver = `<span class="silver-text">SILVER</span><br>
-           <i class="fa-solid fa-medal fa-beat rank-silver"></i>`;
-  gold = `<span class="gold-text">GOLD</span><br>
-           <i class="fa-solid fa-medal fa-beat rank-gold"></i>`;
-  diamond = `<span class="diamond-text">DIAMOND</span><br>
-           <i class="fa-solid fa-medal fa-beat rank-diamond"></i>`;
+// function to play sound on all buttons on mouse over.
+$('button').on('mouseover', function () {
+  mouseOverSound.play();
+});
 
-  if (questionCounter == 21 && playerScore <= 5) {
-    return bronze;
-  } else if (questionCounter == 21 && playerScore >= 6 && playerScore <= 10) {
-    return silver;
-  } else if (questionCounter == 21 && playerScore >= 11 && playerScore <= 15) {
-    return gold;
-  } else if (questionCounter == 21 && playerScore >= 16 && playerScore <= 20) {
-    return diamond;
+// function to open the game rules
+$('#btn-rules').on('click', function () {
+  $('.rules-container').fadeIn(1000);
+});
+
+// function to close the game rules
+$('#close-rules-btn').on('click', function () {
+  $('.rules-container').fadeOut(1000);
+});
+
+// function to mute the game theme.
+$('#check-mute').on('click', function () {
+  isChecked = $('#check-mute').is(':checked')
+  if (isChecked) {
+    $('audio#theme').prop('muted', true)
   }
+  else $('audio#theme').prop('muted', false)
+})
+
+// function to play the theme tune when the quiz loads.
+$('audio#theme').ready(function () {
+  $('audio#theme')[0].play();
+  $('audio#theme')[0].loop = true;
+});
+
+// function to return to the main menu.
+$('#btn-exit #btn-main-menu').on('click', function mainMenuReturn() {
+  if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
+    window.location.replace('index.html');
+  }
+});
+
+/**
+ * Event handler for the start button on index.html
+ * each element is faded in, totalling 4.5seconds per transition
+ * ending with the introduction to the first game section
+ */
+$('#btn-start').on('click', function () {
+  gameStartBtnSound.play();
+  $('#btn-start,#btn-rules').fadeOut(1000);
+  setTimeout(() => {
+    introSoundPresenting.play();
+    $('.first-intro').fadeIn(2500).fadeOut(2000);
+  }, 2000);
+  setTimeout(() => {
+    introSoundTrivia.play();
+    $('.second-intro').fadeIn(2500).fadeOut(2000);
+  }, 7500);
+  setTimeout(() => {
+    window.location.replace('game.html');
+  }, 13000);
+});
+
+// function to trigger divs to split and launch the game.
+$(window).on("load", function () {
+  window.setTimeout(revealDivLeft, 2750);
+  window.setTimeout(revealDivRight, 2750);
+  startGame();
+});
+
+// function to animate divs after intro.
+function revealDivRight() {
+  $('#game-reveal-div-2').animate({ left: "+=50vw" }, 3000);
+  $('#game-reveal-div-2').hide(500);
 }
+
+// function to animate divs after intro.
+function revealDivLeft() {
+  $('#game-reveal-div-1').animate({ left: "-=50vw" }, 3000);
+  $('#game-reveal-div-1').hide(500);
+}
+
+
+
+
 
 
 
