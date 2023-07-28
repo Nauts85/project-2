@@ -58,6 +58,51 @@ button:hover {
   cursor: crosshair;
 }
 
+
+label {
+  font-family: 'Changa', sans-serif;
+  margin-right: 5px;
+}
+
+
+input[type="checkbox"] {
+  background: #fafafa;
+  border: 2px inset grey;
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  margin: 25px 0px;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translate3d(440px, 80px, 0px);
+  z-index: 1;
+  width: fit-content;
+  border-radius: 20px 20px 20px 20px;
+  padding: 5px;
+  background: rgba(138, 131, 134, 0.4);
+  border: 3px inset #fafafa;
+}
+
+.dropdown-item {
+  font-family: 'Orbitron', sans-serif;
+  font-size: calc(0.8rem + 1.5vw);
+  font-weight: 500;
+  width: 186px;
+  border-radius: 20px 20px 20px 20px;
+  padding: 5px;
+  background: rgba(138, 131, 134, 0.4);
+  border: 3px inset #fafafa;
+  color: #fafafa;
+  margin: 10px 0px;
+  text-align: center;
+}
+
 .btn-option {
   font-family: 'Changa', sans-serif;
   width: 240px;
@@ -174,36 +219,25 @@ button:hover {
   background: #354c99;
 }
 
-#exit-button {
+#btn-options {
   font-family: 'Orbitron', sans-serif;
-  border: 3px solid black;
-  position: absolute;
-  right: 0;
-  top: 30px;
-  width: auto;
-  margin: 5px 10px;
-  font-size: calc(0.8rem + 1.5vw);
-  border-radius: 20px 0px 20px 0px;
-  box-shadow: 3px 3px 3px black;
+  background: rgba(138, 131, 134, 0.4);
   color: #fafafa;
-  font-weight: 500;
-  background-color: #130436;
-  background: -moz-linear-gradient(-45deg,
-      #130436 0%,
-      #74049E 29%,
-      #3F0468 100%);
-  background: -webkit-linear-gradient(-45deg,
-      #130436 0%,
-      #74049E 29%,
-      #3F0468 100%);
-  background: linear-gradient(135deg,
-      #130436 0%,
-      #74049E 29%,
-      #3F0468 100%);
+  border: 3px inset #fafafa;
+  border-radius: 20px 20px 20px 20px;
+  ;
+  padding: 7px;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  float: right;
+  margin-top: 34px;
+  margin-right: 20px;
+  box-shadow: 3px 3px 3px black;
 }
 
-#exit-button:hover {
-  color: black;
+#btn-close-options,
+#btn-exit {
+  margin-left: 35px;
 }
 
 /*---------------------------------------------Text-Areas-------------*/
@@ -232,15 +266,33 @@ button:hover {
 
 .player-score {
   font-family: 'Changa', sans-serif;
-  margin: 20px 5px;
+  margin: 20px 0px;
+  padding: 0px;
   font-size: calc(1.7rem + 1.5vw);
   font-weight: 900;
   color: #fafafa;
 }
 
+.options-container {
+  font-family: 'Goldman', cursive;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #fafafa;
+  background-color: #74049e;
+  border: 3px inset #fafafa;
+  border-radius: 10px 10px 10px 10px;
+  padding: 20px;
+  width: fit-content;
+  height: fit-content;
+}
+
 .quiz-container {
-  border: 7px inset #fafafa;
-  border-radius: 5px 5px 5px 5px;
+  border: 6px inset #fafafa;
+  border-radius: 20px 20px 20px 20px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -349,8 +401,9 @@ button:hover {
 .add-one {
   font-family: 'Orbitron', sans-serif;
   font-size: calc(1.3rem + 1.5vw);
+  font-weight: 900;
   color: #fafafa;
-  padding: 0;
+  padding-left: 10px;
 }
 
 .second-intro {
@@ -554,7 +607,6 @@ footer {
   width: 100vw;
 }
 
-
 .hidden {
   display: none;
 }
@@ -571,8 +623,31 @@ footer {
     width: 200px;
   }
 
+  input[type="checkbox"] {
+    height: 18px;
+    width: 18px;
+    margin: 0px;
+  }
 
-  
+  .dropdown-item {
+    font-size: calc(0.4rem + 1.5vw);
+    font-weight: 700;
+    width: 115px;
+  }
+
+  #btn-close-options,
+  #btn-exit {
+    margin-left: 23px;
+    margin-top: 5px;
+  }
+
+  #btn-options {
+    font-size: calc(0.4rem + 1.5vw);
+    width: 115px;
+    margin-top: 28px;
+    margin-right: 8px;
+  }
+
   #display {
     animation: answer-text-enlarge 2.5s forwards;
   }
@@ -588,7 +663,23 @@ footer {
   }
 }
 
+@media (min-width: 518px) {
+
+  .dropdown-item {
+    font-size: calc(0.3rem + 1.5vw);
+  }
+}
+
 @media (min-width: 576px) {
+
+  #btn-options {
+    width: 168px;
+  }
+
+  .dropdown-item {
+    width: 125px;
+  }
+
   #display {
     animation: answer-text-enlarge 2.5s forwards;
   }
@@ -602,22 +693,22 @@ footer {
       font-size: 5.5rem;
     }
   }
-}
 
-#progress-display {
-  animation: progress-text-enlarge 2.5s forwards;
-}
 
-@keyframes progress-text-enlarge {
-  0% {
-    font-size: 3.5rem;
+  #progress-display {
+    animation: progress-text-enlarge 2.5s forwards;
   }
 
-  100% {
-    font-size: 4.5rem;
+  @keyframes progress-text-enlarge {
+    0% {
+      font-size: 3.5rem;
+    }
+
+    100% {
+      font-size: 4.5rem;
+    }
   }
 }
-
 
 @media (min-width: 650px) {
   .btn-option {
@@ -625,8 +716,27 @@ footer {
   }
 }
 
+@media (min-width: 767px) {
+  .dropdown-item {
+    width: 138px;
+    font-size: calc(0.2rem + 1.5vw);
+    font-weight: 500;
+  }
+
+  #btn-options {
+    width: 181.3px;
+  }
+}
 
 @media (min-width: 900px) {
+  .dropdown-item {
+    width: 145px;
+  }
+
+  #btn-options {
+    width: 188.3px;
+  }
+
   #display {
     animation: answer-text-enlarge 2.5s forwards;
   }
@@ -661,14 +771,29 @@ footer {
   .btn-option {
     height: 72px;
   }
+
+  .dropdown-item {
+    width: 165px;
+  }
+
+  #btn-options {
+    width: 208.3px;
+  }
 }
-
-
 
 @media (min-width: 1200px) {
   .btn-option {
     width: 330px;
   }
+
+  .dropdown-item {
+    width: 185px;
+  }
+
+  #btn-options {
+    width: 228.3px;
+  }
+
 
   #display {
     animation: answer-text-enlarge 2.5s forwards;
@@ -695,6 +820,11 @@ footer {
     width: 260px;
   }
 
+  .dropdown-item {
+    font-size: calc(0.01rem + 1.5vw);
+    font-weight: 400;
+  }
+
 }
 
 @media (min-width: 1500px) {
@@ -703,11 +833,42 @@ footer {
   }
 }
 
+@media (min-width: 1600px) {
+  .dropdown-item {
+    width: 195px;
+    font-weight: 400;
+  }
+
+  #btn-options {
+    width: 238.3px;
+  }
+
+  #btn-close-options,
+  #btn-exit {
+    margin-left: 38px;
+  }
+}
+
+
 @media (min-width: 1660px) {
   .btn-option {
     height: 100px;
     font-size: 1.9rem;
   }
+
+  input[type="checkbox"] {
+    height: 32px;
+    width: 32px;
+  }
+
+  .dropdown-item {
+    width: 205px;
+  }
+
+  #btn-options {
+    width: 262.3px;
+  }
+
 
   #question-area {
     font-size: 2rem;
@@ -715,11 +876,19 @@ footer {
 }
 
 @media (min-width: 1810px) {
-  
+
+  .dropdown-item {
+    width: 225px;
+  }
+
   .btn-main-menu {
     font-size: 2rem;
   }
-  
+
+  #btn-options {
+    width: 272.3px;
+  }
+
   #exit-button {
     margin-right: 290px;
   }
