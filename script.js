@@ -284,7 +284,7 @@ function questionChange() {
   $("#display").addClass("hidden");
   $("button.btn-option")
     .prop("disabled", false)
-    .removeClass("correct", "incorrect");
+    .removeClass("correct incorrect");
   questionCounter++;
   currentQuestionIndex++;
   midGameSequence();
@@ -322,7 +322,7 @@ $(window).on("load", function () {
 });
 
 // function to return to the main menu.
-$('#btn-exit').on('click', function mainMenuReturn() {
+$('#btn-exit,#btn-main-menu').on('click', function mainMenuReturn() {
   if (confirm("EXIT AND RETURN TO MAIN MENU?")) {
     window.location.replace('index.html');
   }
@@ -414,7 +414,7 @@ function rankRevealSequence(iconRank) {
         <div class="container container-game-end text-center">
           <div class="row">
             <div class="col-12">
-              <h1>Congratulations<h1>
+              <h1 class="rank-header">Congratulations<h1>
               <p>You've made it to the end of the quiz!</p>
               <p>You managed to answer ${playerScore} questions correctly!</p>
               <p>Earning you the Rank of:</p>
@@ -422,7 +422,7 @@ function rankRevealSequence(iconRank) {
             <div class="col-12 rank-display">
               ${iconRank}
             </div>
-            <div class="col-12">
+            <div class="col-12 p-0">
               <button type="button" class="btn-main-menu" onclick="mainMenuReturn()">MAIN MENU</button>
             </div>
          </div>
