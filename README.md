@@ -4,13 +4,13 @@
 
 [Link to the live project here](https://nauts85.github.io/project-2/)
 
-[Link to Testing document here](NOT AVAILABLE YET)
+[Link to Testing document here](https://github.com/Nauts85/project-2/blob/main/TESTING.md)
 
 
-   This is the quiz application _Trivia Timeline_ (Video-Game Edition). A 20 question quiz with questions rangeing from the 1980s right through to the late 2010s. i wanted to create a fun immersive experince with some aspects of video games and merge them with a tv game show quiz.   
-   _Trivia Timeline_ can be played by anybody, although a knowledge of video games would certainly be an advantage, it is by no means neccesary.
+   This is the quiz application _Trivia Timeline_ (Video-Game Edition). A 20 question quiz with questions ranging from the 1980s right through to the late 2010s. i wanted to create a fun immersive experience with some aspects of video games and merge them with a tv game show quiz.   
+   _Trivia Timeline_ can be played by anybody, although a knowledge of video games would certainly be an advantage, it is by no means necessary.
    _Trivia Timeline_ could be used as an entertainment tool as part of a larger website. it could be expanded itself with new questions added.
-   New versions could also be released under the same name but with a difrent edition title. 
+   New versions could also be released under the same name but with a different edition title. 
 
 ---
 
@@ -26,7 +26,7 @@
      - As a user i want to see clearly how many questions i have answered correctly.
      - As a user i want clear feedback about correct or incorrect answers.
      - As a user i want to feel immersion while playing.
-     - As a user i want to be able to exit the quiz at any point and return to the main menu.
+     - As a user i want to have an in game options menu to change options about the quiz or return to the main menu.
 
    * **Dev Goals**
      - As a Developer i want to grab the users attention from the start.
@@ -53,18 +53,18 @@
           it is also easier to read than _Orbitron_ and has the option of lower font weights to increase readability. 
 
         - _Goldman_ with a fall back of cursive is used exclusively for the 2 central display elements. i wanted to give the user some extra variety
-          when looking at the display. At large sizes this font looks modern and stylsh and overall adds to the user experience.
+          when looking at the display. At large sizes this font looks modern and stylish and overall adds to the user experience.
 
     * **Imagery**
         - The Landing page image was chosen to show the user the theme of the content of the quiz, the focus of the image is around the edges
           so as not to distract from the buttons in the center.
         - The Game page background was chosen to offer some visual appeal, however i wanted it to be fairly simple as far as images go in order
-          for it not to cuase any distracton to the user or cause issues with readabilty from the display elements.
+          for it not to cause any distraction to the user or cause issues with readability from the display elements.
 
     * **Audio**
         - The main theme tune for the quiz was chosen for creating atmosphere, the music is light with a slight bit of tension.
           The purpose is to add another level of immersion to the user while playing.
-        - The Correct and Incorrect sounds were chosen to indidcate to the user on an audio level if they answered the question correctly
+        - The Correct and Incorrect sounds were chosen to indicate to the user on an audio level if they answered the question correctly
           or incorrectly. I wanted something that would be noticed but not to overpowering that it would eventually become an irritation.
         - Light sounds play at certain points in the game to grab the users attention. These are again used to add more immersion to the user
           and to draw their attention to something that may be happening in the quiz.
@@ -101,10 +101,10 @@ _End page_ (Mobile)
  * immersive sound to create tension. 
  * Unique end of quiz rank dependant on how well you have scored.
 ## **Future-Features**
- * A user name feature that could be used to personalise the quiz and create more immersion.
+ * A user name feature that could be used to personalize the quiz and create more immersion.
  * Different question types (Timed, odd one out, etc.)
  * The option to save your score on a leader board.
- * Options menu to adjust things about the quiz (Mute, colour blind mode, visually imapaired mode.)
+ * Options menu to adjust things about the quiz (colour blind mode, visually impaired mode.)
  * The Option to share the quiz with others through social media and compare scores.
 ## **Technologies Used**
 ---
@@ -128,7 +128,7 @@ _End page_ (Mobile)
   8. [Am I Responsive](https://ui.dev/amiresponsive)
       * Am I Responsive was used to create the readme multiple device image.
   8. [Jquery](https://jquery.com/)
-      * Jquery was used to proivide interactivity to the App
+      * Jquery was used to provide interactivity to the App
 
 ## **Deployment**
 
@@ -157,7 +157,7 @@ _End page_ (Mobile)
 
  3. Copy the HTTPS link that is displayed.
 
- 4. Naviagte to your own code space.
+ 4. Navigate to your own code space.
 
  5. In the CLI type git clone "Copied URL goes here" see image below for an example.
 
@@ -166,7 +166,8 @@ _End page_ (Mobile)
 
 ## **Credits**
   * ## **Code**
-  * I Have not used any code snippets on the project.   
+  
+  * All code was Written by myself.  
    
   * ## **Content**
   1. [CSScheatsheet](https://htmlcheatsheet.com/css/)
@@ -180,5 +181,6 @@ _End page_ (Mobile)
   * _Web Dev Simplified_ on [YouTube](https://www.youtube.com/) helped me greatly with understanding JavaScript code.
   * All additional Content was created By myself.
 
-* ## **Aknowledgements**
+* ## **Acknowledgements**
 * I'd like to thank Bristol college for supporting me throughout this project.
+* I'd also like to thank my play testers.
