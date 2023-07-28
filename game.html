@@ -23,7 +23,7 @@
 <body id="img-bg-game">
     <!--Audio element to play the main theme when game.html loads.-->
     <audio id="theme">
-        <source src="../project-2/assests/audio/bg-music-game.mp3" type="audio/mp3">
+        <source src="assests/audio/bg-music-game.mp3" type="audio/mp3">
     </audio>
     <!--Animated intro elements that are hidden when the animation ends and the game starts.-->
     <div id="game-reveal-div-1"></div>
@@ -31,10 +31,23 @@
     <!--Start of player score container.-->
     <div class="container">
         <div class="row">
-            <div class="col-12 player-score">
+            <div class="col-7 player-score">
                 <span>SCORE:</span>
                 <span id="score-counter">0</span>
                 <span class="add-one"></span>
+            </div>
+            <div class="col-5 p-0">
+                <!--Start of options menu.-->
+                <div class="dropdown">
+                    <button type="button" id="btn-options" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">OPTIONS</button>
+                    <ul class="dropdown-menu">
+                        <li><input type='checkbox' name='mute' id="check-mute"/>
+                            <label for="check"><span class="dropdown-item"> MUTE MUSIC</span></label>
+                        </li>
+                        <li><button id="btn-exit" class="dropdown-item">EXIT GAME</button></li>
+                        <li><button id="btn-close-options" class="dropdown-item">CLOSE</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -70,25 +83,6 @@
             </div>
             <div class="col-12 col-sm-6 p-0">
                 <button id="opt-4" class="btn-option" type="button">OPTION 4 </button>
-            </div>
-        </div>
-    </div>
-    <!--Options button element to open the options menu.-->
-    <div class="div">
-        <button type="button" id="btn-options">OPTIONS</button>
-    </div>
-    <div class="container options-container hidden">
-        <div class="row">
-            <div class="col-12">
-                <h1>OPTIONS MENU</h1>
-                <div class="col-12 text-center">
-                    <input type='checkbox' name='mute' id="check-mute" />
-                    <label for="check"><span class="highlight"> MUTE MUSIC</span></label>
-                </div>
-            </div>
-            <div class="col-12 text-center">
-                <button id="btn-exit">EXIT GAME</button>
-                <button id="btn-close-options">CLOSE</button>
             </div>
         </div>
     </div>
